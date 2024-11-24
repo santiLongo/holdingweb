@@ -11,7 +11,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView; 
  
 @Configuration 
-@ComponentScan("prog2.holdingweb") 
+@ComponentScan("prog2.holdingweb")
 @EnableWebMvc 
 public class AppConfig implements WebMvcConfigurer { 
  
