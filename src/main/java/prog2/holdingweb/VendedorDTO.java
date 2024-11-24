@@ -9,30 +9,34 @@ public class VendedorDTO extends UsuarioDTO{
     private LocalDate fechaEntrada;
     private int codigo;
     private String direccion;
-    private int idEmpresa;
-    private int idLider;
+    private EmpresaDTO empresa;
+    private VendedorDTO lider;
     private ArrayList<VendedorDTO> reclutas;
     
-    public VendedorDTO(int codigo, String usuario, String contrasenia, String nombre, String date, String direccion, int idEmpresa, int idLider) {
+    public VendedorDTO(){
+        this.reclutas = new ArrayList<>();
+    }
+    
+    public VendedorDTO(int codigo, String usuario, String contrasenia, String nombre, String date, String direccion, EmpresaDTO empresa, VendedorDTO lider) {
         setUs(usuario);
         setContraseña(contrasenia);
         this.codigo = codigo;
         this.nombre = nombre;
         this.direccion = direccion;
         this.fechaEntrada = LocalDate.parse(date);
-        this.idEmpresa = idEmpresa;
-        this.idLider = idLider;
+        this.empresa = empresa;
+        this.lider = lider;
     }
     
-    public VendedorDTO(int codigo, String usuario, String contrasenia, String nombre, String direccion, int idEmpresa, int idLider) {
+    public VendedorDTO(int codigo, String usuario, String contrasenia, String nombre, String direccion, EmpresaDTO empresa, VendedorDTO lider) {
         setUs(usuario);
         setContraseña(contrasenia);
         this.codigo = codigo;
         this.nombre = nombre;
         this.direccion = direccion;
         this.fechaEntrada = LocalDate.now();
-        this.idEmpresa = idEmpresa;
-        this.idLider = idLider;
+        this.empresa = empresa;
+        this.lider = lider;
     }
 
     public ArrayList<VendedorDTO> getReclutas() {
@@ -55,8 +59,8 @@ public class VendedorDTO extends UsuarioDTO{
         return fechaEntrada;
     }
 
-    public void setFechaEntrada(LocalDate fechaEntrada) {
-        this.fechaEntrada = fechaEntrada;
+    public void setFechaEntrada(String fechaEntrada) {
+        this.fechaEntrada = LocalDate.parse(fechaEntrada);
     }
 
     public int getCodigo() {
@@ -75,21 +79,20 @@ public class VendedorDTO extends UsuarioDTO{
         this.direccion = direccion;
     }
 
-    public int getIdEmpresa() {
-        return idEmpresa;
+    public EmpresaDTO getEmpresa() {
+        return empresa;
     }
 
-    public void setIdEmpresa(int idEmpresa) {
-        this.idEmpresa = idEmpresa;
+    public void setEmpresa(EmpresaDTO empresa) {
+        this.empresa = empresa;
     }
 
-    public int getIdLider() {
-        return idLider;
+    public VendedorDTO getLider() {
+        return lider;
     }
 
-    public void setIdLider(int idLider) {
-        this.idLider = idLider;
+    public void setLider(VendedorDTO lider) {
+        this.lider = lider;
     }
-    
     
 }
