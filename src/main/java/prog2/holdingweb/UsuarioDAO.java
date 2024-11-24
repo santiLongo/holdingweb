@@ -16,6 +16,10 @@ public class UsuarioDAO {
     private final String dbUser; 
     private final String dbPswd; 
     private UsuarioDTO usuario;
+    @Autowired 
+    private VendedorDAO vendedorDAO;
+    @Autowired
+    private AsesorDAO asesorDAO;
     
     @Autowired 
     public UsuarioDAO( 
@@ -72,33 +76,16 @@ public class UsuarioDAO {
                    this.usuario = new AdministradorDTO(rs.getString(2),rs.getString(3));
                    break;
                case "vendedor":
-                   this.usuario = new VendedorDTO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getInt(8));
-                   ((VendedorDTO)this.usuario).setReclutas(listaReclutas(codigo));
+                   this.usuario = vendedorDAO.cargarVendedor(codigo);
                    break;
                case "asesor":
-                   this.usuario = new AsesorDTO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
+                   this.usuario = asesorDAO.cargarAsesor(codigo);
                    break;
            }
            con.close(); 
        } catch (SQLException e) { 
            System.err.println(e.getMessage()); 
        } 
-   }
-   
-   private ArrayList<VendedorDTO> listaReclutas(int codigo){
-       ArrayList<VendedorDTO> reclutas = new ArrayList<>();
-       try {
-            Connection con = DriverManager.getConnection(dbFullURL, dbUser, dbPswd);
-            Statement stmt = con.createStatement(); 
-            stmt.execute("SELECT * FROM vendedor WHERE idLider = " + codigo + ""); 
-            ResultSet rs = stmt.getResultSet(); 
-            while(rs.next()){
-                reclutas.add(new VendedorDTO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getInt(8)));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return reclutas;
    }
 
     public UsuarioDTO getUsuario() {
