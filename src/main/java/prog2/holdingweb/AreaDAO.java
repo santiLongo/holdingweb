@@ -46,8 +46,8 @@ public class AreaDAO {
                     + "WHERE a.id = " +codigo+ ");"); 
             ResultSet rs = stmt.getResultSet(); 
             rs.next();
-            area.setNombre(rs.getString(2));
-            area.setDescripcion(rs.getString(3));
+            area.setNombre(rs.getString("nombre"));
+            area.setDescripcion(rs.getString("descripcion"));
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
         }

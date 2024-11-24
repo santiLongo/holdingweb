@@ -46,11 +46,11 @@ public class EmpresaDAO {
             stmt.execute("SELECT * FROM empresa WHERE id = " + codigo + ""); 
             ResultSet rs = stmt.getResultSet(); 
             rs.next();
-            empresa.setNombre(rs.getString(2));
-            empresa.setFacturacion(rs.getInt(3));
+            empresa.setNombre(rs.getString("nombre"));
+            empresa.setFacturacion(rs.getInt("facturacion"));
             empresa.setCantVendedores(vendedorDAO.cantidadVendedores(codigo));
-            empresa.setFechaDeEntrada(rs.getString(5));
-            empresa.setSedeCentral(paisDAO.cargarPais(rs.getInt(6)));
+            empresa.setFechaDeEntrada(rs.getString("fechaDeEntrada"));
+            empresa.setSedeCentral(paisDAO.cargarPais(rs.getInt("ipPaisSede")));
             empresa.setPaises(paisDAO.cargarListaPaises(codigo));
             empresa.setAreas(areaDAO.cargarAreasCubre(codigo));
         } catch (SQLException ex) {

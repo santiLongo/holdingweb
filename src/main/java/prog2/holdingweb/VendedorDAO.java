@@ -41,11 +41,12 @@ public class VendedorDAO {
             stmt.execute("SELECT * FROM vendedor WHERE id = " + codigo + ""); 
             ResultSet rs = stmt.getResultSet(); 
             rs.next();
-            vendedor.setNombre(rs.getString(4));
-            vendedor.setFechaEntrada(rs.getString(5));
-            vendedor.setDireccion(rs.getString(6));
-            vendedor.setEmpresa(empresaDAO.cargarEmpresa(rs.getInt(7)));
-            vendedor.setLider(cargarVendedor(rs.getInt(8)));
+            vendedor.setNombre(rs.getString("nombre"));
+            vendedor.setFechaEntrada(rs.getString("fechaDeEntrada"));
+            vendedor.setDireccion(rs.getString("direccion"));
+            vendedor.setEmpresa(empresaDAO.cargarEmpresa(rs.getInt("idEmpresa")));
+            vendedor.setLider(cargarVendedor(rs.getInt("idLider")));
+            vendedor.setReclutas(listaReclutas(codigo));
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -60,7 +61,7 @@ public class VendedorDAO {
             stmt.execute("SELECT id FROM vendedor WHERE idLider = " + codigo + ""); 
             ResultSet rs = stmt.getResultSet(); 
             while(rs.next()){
-                reclutas.add(cargarVendedor(rs.getInt(1)));
+                reclutas.add(cargarVendedor(rs.getInt("id")));
             }
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -74,12 +75,12 @@ public class VendedorDAO {
         try {
             Connection con = DriverManager.getConnection(dbFullURL, dbUser, dbPswd);
             Statement stmt = con.createStatement(); 
-            stmt.execute("SELECT COUNT(vendedor.idEmpresa) "
+            stmt.execute("SELECT COUNT(vendedor.idEmpresa) AS cantVendedores "
                     + "FROM vendedor "
                     + "WHERE vendedor.idEmpresa = " +codigoEmpresa+ ";"); 
             ResultSet rs = stmt.getResultSet(); 
             rs.next();
-            cantidadVendedores = rs.getInt(1);
+            cantidadVendedores = rs.getInt("cantVendedores");
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
         }

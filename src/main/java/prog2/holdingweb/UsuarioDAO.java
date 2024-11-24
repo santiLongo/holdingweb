@@ -54,8 +54,8 @@ public class UsuarioDAO {
                         "WHERE usuario = '"+us+"' AND contrasenia = '"+cont+"';"); 
            ResultSet rs = stmt.getResultSet(); 
            if(rs.next()){
-               resultado = rs.getString(1);
-               cargarUsuario(rs.getString(1),rs.getInt(2));
+               resultado = rs.getString("tipo_usuario");
+               cargarUsuario(rs.getString(1),rs.getInt("id"));
            } 
            con.close(); 
        } catch (SQLException e) { 
@@ -73,7 +73,7 @@ public class UsuarioDAO {
            rs.next();
            switch (tipo){
                case "administrador":
-                   this.usuario = new AdministradorDTO(rs.getString(2),rs.getString(3));
+                   this.usuario = new AdministradorDTO(rs.getString("usuario"),rs.getString("contrasenia"));
                    break;
                case "vendedor":
                    this.usuario = vendedorDAO.cargarVendedor(codigo);

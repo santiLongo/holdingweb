@@ -43,8 +43,8 @@ public class AsesorDAO {
             stmt.execute("SELECT * FROM asesor WHERE id = " + codigo + ""); 
             ResultSet rs = stmt.getResultSet(); 
             rs.next();
-            asesor.setNombre(rs.getString(4));
-            asesor.setDireccion(rs.getString(5));
+            asesor.setNombre(rs.getString("nombre"));
+            asesor.setDireccion(rs.getString("direccion"));
             asesor.setAreas(areaDAO.cargarAreasSoporta(codigo));
             asesor.setAsesora(cargarAsesora(codigo));
         } catch (SQLException ex) {

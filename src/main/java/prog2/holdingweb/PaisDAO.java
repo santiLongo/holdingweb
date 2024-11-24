@@ -38,10 +38,10 @@ public class PaisDAO {
             stmt.execute("SELECT * FROM pais WHERE id = " + codigo + ""); 
             ResultSet rs = stmt.getResultSet(); 
             rs.next();
-            pais.setNombre(rs.getString(2));
-            pais.setCapital(rs.getString(3));
-            pais.setCantidadHabitantes(rs.getInt(4));
-            pais.setPbi(rs.getInt(5));
+            pais.setNombre(rs.getString("nombre"));
+            pais.setCapital(rs.getString("capital"));
+            pais.setCantidadHabitantes(rs.getInt("cantHabitantes"));
+            pais.setPbi(rs.getInt("pbi"));
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
