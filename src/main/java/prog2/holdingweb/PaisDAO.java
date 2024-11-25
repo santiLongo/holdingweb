@@ -42,6 +42,9 @@ public class PaisDAO {
             pais.setCapital(rs.getString("capital"));
             pais.setCantidadHabitantes(rs.getInt("cantHabitantes"));
             pais.setPbi(rs.getInt("pbi"));
+            stmt.close();
+            con.close();
+            rs.close();
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -62,6 +65,9 @@ public class PaisDAO {
             while(rs.next()){
                 paises.add(cargarPais(rs.getInt(1)));
             }
+            stmt.close();
+            con.close();
+            rs.close();
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
         }

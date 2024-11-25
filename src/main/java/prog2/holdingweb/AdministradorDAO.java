@@ -40,6 +40,9 @@ public class AdministradorDAO {
             if(rs.isBeforeFirst()){
                 existe = true;
             }
+            stmt.close();
+            con.close();
+            rs.close();
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -52,6 +55,8 @@ public class AdministradorDAO {
             Statement stmt = con.createStatement(); 
             stmt.executeUpdate("INSERT INTO `administrador`(`usuario`, `contrasenia`) "
                     + "VALUES ('"+usuario+"','"+contrasenia+"')");
+            stmt.close();
+            con.close();
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
         }

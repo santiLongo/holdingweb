@@ -47,6 +47,9 @@ public class VendedorDAO {
             vendedor.setEmpresa(empresaDAO.cargarEmpresa(rs.getInt("idEmpresa")));
             vendedor.setLider(cargarVendedor(rs.getInt("idLider")));
             vendedor.setReclutas(listaReclutas(codigo));
+            stmt.close();
+            con.close();
+            rs.close();
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -63,6 +66,9 @@ public class VendedorDAO {
             while(rs.next()){
                 reclutas.add(cargarVendedor(rs.getInt("id")));
             }
+            stmt.close();
+            con.close();
+            rs.close();
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -81,6 +87,9 @@ public class VendedorDAO {
             ResultSet rs = stmt.getResultSet(); 
             rs.next();
             cantidadVendedores = rs.getInt("cantVendedores");
+            stmt.close();
+            con.close();
+            rs.close();
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
         }

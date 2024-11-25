@@ -47,6 +47,9 @@ public class AsesorDAO {
             asesor.setDireccion(rs.getString("direccion"));
             asesor.setAreas(areaDAO.cargarAreasSoporta(codigo));
             asesor.setAsesora(cargarAsesora(codigo));
+            stmt.close();
+            con.close();
+            rs.close();
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -65,6 +68,9 @@ public class AsesorDAO {
                     AsesorDTO.Asesora a = new AsesorDTO.Asesora(empresa, rs.getString("fechaDeEntrada"));
                     asesora.add(a);
             }
+            stmt.close();
+            con.close();
+            rs.close();
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
         }

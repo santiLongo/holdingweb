@@ -57,7 +57,9 @@ public class UsuarioDAO {
                resultado = rs.getString("tipo_usuario");
                cargarUsuario(rs.getString(1),rs.getInt("id"));
            } 
-           con.close(); 
+           stmt.close();
+           con.close();
+           rs.close(); 
        } catch (SQLException e) { 
            System.err.println(e.getMessage()); 
        } 
@@ -82,7 +84,10 @@ public class UsuarioDAO {
                    this.usuario = asesorDAO.cargarAsesor(codigo);
                    break;
            }
-           con.close(); 
+           con.close();
+           stmt.close();
+           con.close();
+           rs.close();
        } catch (SQLException e) { 
            System.err.println(e.getMessage()); 
        } 

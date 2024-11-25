@@ -4,45 +4,91 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css" href="/resources/css/estilo.css">
         <title>Vendedor Holding</title>
     </head>
     <body>
-        <h1>Bienvenido ${usuario.nombre}</h1>
-        <h4>
-            Su codigo de vendedor es: ${usuario.codigo} <br>
-            Direccion: ${usuario.direccion} <br>
-            Inicio actividades la fecha: ${usuario.fechaEntrada} <br>
-            Trabaja para la empresa: ${usuario.idEmpresa} 
-            <c:choose>
-                <c:when test = "${usuario.getIdLider() == 0}">
-                    <h4>
-                        No tiene lider.
-                    </h4>
-                </c:when>
-                <c:otherwise>
-                    <h4>
-                        Su lider es: ${usuario.idLider}
-                    </h4>
-                </c:otherwise>
-            </c:choose>
-            <c:choose>
-                <c:when test = "${empty usuario.reclutas}">
-                    <h4>
-                        No tiene reclutas.
-                    </h4>
-                </c:when>
-                <c:otherwise>
-                    <h4>
-                        Sus reclutas son:
-                    </h4>
-                    <c:forEach var="recluta" items="${usuario.reclutas}">
-                        <p>${recluta.nombre}</p> <!-- Asegúrate de que `nombre` es un atributo de Recluta -->
-                    </c:forEach>
-                </c:otherwise>
-            </c:choose>
-        </h4>
-        <form method="get" action="/"> 
-            <input type="submit" value="Cerrar Sesion">
-        </form>
+        <div id="container">
+            <header>
+                <h1>
+                    Bienvenido ${usuario.nombre}
+                </h1>
+            </header>
+            
+                
+            <section id="contenido">
+                <article id="artCodigo">
+                    <h2>
+                        Su codigo de vendedor es:
+                    </h2>
+                    <p>
+                        ${usuario.codigo}
+                    </p>
+                </article>
+                <article id="artDireccion">
+                <h2>
+                    Su direccion es: 
+                </h2>
+                <p>
+                     ${usuario.direccion}
+                </p>
+                </article>
+                <article id="artFecha">
+                    <h2>
+                        Inicio actividades la fecha: 
+                    </h2>
+                    <p>
+                        ${usuario.fechaEntrada}
+                    </p>
+                </article>
+                <article id="artEmpresa">
+                <h2>
+                    Trabaja para la empresa: 
+                </h2>
+                <p>
+                    ${usuario.empresa.nombre}
+                </p>
+                </article>
+                <article id="artLider">
+                    <c:choose>
+                        <c:when test = "${usuario.lider.codigo == 0}">
+                            <h2>
+                                No tiene lider.
+                            </h2>
+                        </c:when>
+                        <c:otherwise>
+                            <h2>
+                                Su lider es:
+                            </h2>
+                            <p>
+                                ${usuario.lider.nombre}
+                            </p>
+                        </c:otherwise>
+                    </c:choose>
+                </article>
+                <article id="artReclutas">
+                    <c:choose>
+                        <c:when test = "${empty usuario.reclutas}">
+                            <h2>
+                                No tiene reclutas.
+                            </h2>
+                        </c:when>
+                        <c:otherwise>
+                            <h2>
+                                Sus reclutas son:
+                            </h2>
+                            <c:forEach var="recluta" items="${usuario.reclutas}">
+                                <p>
+                                    ${recluta.nombre}
+                                </p>
+                            </c:forEach>
+                        </c:otherwise>
+                    </c:choose>
+                </article>
+            </section>
+            <form method="get" action="/"> 
+                <input type="submit" value="Cerrar Sesion">
+            </form>
+        </div>
     </body>
 </html>

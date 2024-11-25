@@ -48,6 +48,9 @@ public class AreaDAO {
             rs.next();
             area.setNombre(rs.getString("nombre"));
             area.setDescripcion(rs.getString("descripcion"));
+            stmt.close();
+            con.close();
+            rs.close();
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -68,6 +71,9 @@ public class AreaDAO {
             while(rs.next()){
                 areas.add(cargarArea(rs.getInt(1)));
             }
+            stmt.close();
+            con.close();
+            rs.close();
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -88,6 +94,9 @@ public class AreaDAO {
             while(rs.next()){
                 areas.add(cargarArea(rs.getInt(1)));
             }
+            stmt.close();
+            con.close();
+            rs.close();
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -53,6 +53,9 @@ public class EmpresaDAO {
             empresa.setSedeCentral(paisDAO.cargarPais(rs.getInt("ipPaisSede")));
             empresa.setPaises(paisDAO.cargarListaPaises(codigo));
             empresa.setAreas(areaDAO.cargarAreasCubre(codigo));
+            stmt.close();
+            con.close();
+            rs.close();
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
         }

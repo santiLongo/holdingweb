@@ -1,9 +1,3 @@
-<%-- 
-    Document   : altaAdmin
-    Created on : 24 nov 2024, 21:34:36
-    Author     : esmor
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -16,9 +10,9 @@
         <form method="post" action="/">
             <P>
                 Ingrese el usuario del administrtador:<br>
-                <textarea name="usuarioAdmin" id="1"></textarea><br>
+                <input type="text" id="usuarioAdmin" name="usuarioAdmin"><br>
                 Ingrese la contrasenia:<br>
-                <textarea name="contraseniaAdmin" id="2"></textarea><br>
+                <input type="text" id="contraseniaAdmin" name="contraseniaAdmin"><br>
                 <input type="submit" value="Dar de alta">
             </P>
         </form>
