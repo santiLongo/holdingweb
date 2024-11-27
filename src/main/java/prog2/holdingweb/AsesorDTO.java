@@ -12,6 +12,15 @@ public class AsesorDTO extends UsuarioDTO{
     private ArrayList<AreaDTO> areas;
     private ArrayList<Asesora> asesora;
     
+    public AsesorDTO(String usuario, String contrasenia, String nombre, String direccion, ArrayList<AreaDTO> areas, ArrayList<Asesora> asesora){
+        setUsuario(usuario);
+        setContrasenia(contrasenia);
+        this.nombre = nombre;
+        this.direccion = direccion;
+        this.areas = areas;
+        this.asesora = asesora;
+    }
+    
     public AsesorDTO(){
         this.areas = new ArrayList<>();
         this.asesora = new ArrayList<>();
@@ -21,6 +30,11 @@ public class AsesorDTO extends UsuarioDTO{
         
         private EmpresaDTO empresa;
         private LocalDate fechaEntrada;
+        
+        public Asesora(EmpresaDTO empresa){
+            this.empresa = empresa;
+            this.fechaEntrada = LocalDate.now();
+        }
         
         public Asesora(EmpresaDTO empresa, String fechaEntrada){
             this.empresa = empresa;
@@ -35,6 +49,13 @@ public class AsesorDTO extends UsuarioDTO{
             return fechaEntrada;
         }
         
+        public static ArrayList<Asesora> crearLista(ArrayList<EmpresaDTO> empresas){
+            ArrayList<Asesora> asesora = new ArrayList<>();
+            for(EmpresaDTO empresa : empresas){
+                asesora.add(new Asesora(empresa));
+            }
+            return asesora;
+        }
     }
 
     public int getCodigo() {

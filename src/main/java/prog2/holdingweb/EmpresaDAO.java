@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,5 +61,77 @@ public class EmpresaDAO {
             Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return empresa;
+    }
+    
+    public ArrayList<EmpresaDTO> traerEmpresas(){
+       ArrayList<EmpresaDTO> empresas = new ArrayList<>();
+       try {
+            Connection con = DriverManager.getConnection(dbFullURL, dbUser, dbPswd);
+            Statement stmt = con.createStatement(); 
+            stmt.execute("SELECT e.id"
+                    + "FROM empresa e"); 
+            ResultSet rs = stmt.getResultSet(); 
+            while(rs.next()){
+                empresas.add(cargarEmpresa(rs.getInt(1)));
+            }
+            stmt.close();
+            con.close();
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       return empresas;
+    }
+    
+    public void altaEmpresa(EmpresaDTO empresa){
+        try {
+            Connection con = DriverManager.getConnection(dbFullURL, dbUser, dbPswd);
+            Statement stmt = con.createStatement(); 
+            stmt.executeUpdate("INSERT INTO `empresa`(`nombre`, `facturacion`, `cantidadVendedores`, `fechaDeEntrada`, `idPaisSede`) "
+                    + "VALUES ('"+empresa.getNombre()+"','"+empresa.getFacturacion()+"','"+empresa.getCantVendedores()+"','"+empresa.getFechaDeEntrada()+"','"+empresa.getSedeCentral().getCodigo()+"')");
+            stmt.close();
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        actua(empresa);
+        cubre(empresa);
+    }
+    
+    public void actua(EmpresaDTO empresa){
+        try {
+            Connection con = DriverManager.getConnection(dbFullURL, dbUser, dbPswd);
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT e.id "
+                                            + "FROM empresa e"
+                                            + "WHERE e.nombre = "+empresa.getNombre()+";");
+            int idEmpresa = rs.getInt("id");
+            for(PaisDTO pais : empresa.getPaises()){
+                stmt.executeUpdate("INSERT INTO `actua`(`idEmpresa`, `idPais`) "
+                    + "VALUES ('"+idEmpresa+"','"+pais.getCodigo()+"')");
+            }
+            stmt.close();
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void cubre(EmpresaDTO empresa){
+        try {
+            Connection con = DriverManager.getConnection(dbFullURL, dbUser, dbPswd);
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT e.id "
+                                            + "FROM empresa e"
+                                            + "WHERE e.nombre = "+empresa.getNombre()+";");
+            int idEmpresa = rs.getInt("id");
+            for(AreaDTO area : empresa.getAreas()){
+                stmt.executeUpdate("INSERT INTO `cubre`(`idEmpresa`, `idArea`) "
+                    + "VALUES ('"+idEmpresa+"','"+area.getCodigo()+"')");
+            }
+            stmt.close();
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

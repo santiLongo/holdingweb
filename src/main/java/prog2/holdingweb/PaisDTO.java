@@ -2,10 +2,18 @@ package prog2.holdingweb;
 
 public class PaisDTO{
     
+    private int codigo;
     private String nombre;
     private String capital;
     private int pbi;
     private int cantidadHabitantes;
+    
+    public PaisDTO(String nombre, String capital, int pbi, int cantidadHabitantes){
+        this.nombre = nombre;
+        this.capital = capital;
+        this.pbi = pbi;
+        this.cantidadHabitantes = cantidadHabitantes;
+    }
     
     public PaisDTO(){
     }
@@ -41,6 +49,12 @@ public class PaisDTO{
     public void setCantidadHabitantes(int cantidadHabitantes) {
         this.cantidadHabitantes = cantidadHabitantes;
     }
-    
-    
+
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
 }

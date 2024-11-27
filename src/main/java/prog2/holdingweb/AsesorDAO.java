@@ -77,4 +77,36 @@ public class AsesorDAO {
         return asesora;
     }
     
+    public void altaAsesor(AsesorDTO asesor){
+        try {
+            Connection con = DriverManager.getConnection(dbFullURL, dbUser, dbPswd);
+            Statement stmt = con.createStatement(); 
+            stmt.executeUpdate("INSERT INTO `asesor`(`usuario`, `contrasenia`, `nombre`, `direccion`) "
+                    + "VALUES ('"+asesor.getUsuario()+"','"+asesor.getContrasenia()+"','"+asesor.getNombre()+"','"+asesor.getDireccion()+"')");
+            stmt.close();
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        asesora(asesor);
+    }
+    
+    private void asesora(AsesorDTO asesor){
+        try {
+            Connection con = DriverManager.getConnection(dbFullURL, dbUser, dbPswd);
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT a.id "
+                                            + "FROM asesor a"
+                                            + "WHERE a.nombre = "+asesor.getUsuario()+";");
+            int idAsesor = rs.getInt("id");
+            for(AsesorDTO.Asesora asesora : asesor.getAsesora()){
+                stmt.executeUpdate("INSERT INTO `asesora`(`idEmpresa`, `idAsesor`, `fechaDeEntrada`) "
+                    + "VALUES ('"+asesora.getEmpresa().getCodigo()+"','"+idAsesor+"','"+asesora.getFechaEntrada()+"')");
+            }
+            stmt.close();
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

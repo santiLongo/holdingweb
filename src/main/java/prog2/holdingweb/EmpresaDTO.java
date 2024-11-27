@@ -14,6 +14,16 @@ public class EmpresaDTO{
     private ArrayList<AreaDTO> areas;
     private ArrayList<PaisDTO> paises;
     private PaisDTO sedeCentral;
+    
+    public EmpresaDTO(String nombre, int facturacion, ArrayList<AreaDTO> areas, ArrayList<PaisDTO> paises, PaisDTO sedeCentral){
+        this.nombre = nombre;
+        this.facturacion = facturacion;
+        this.areas = areas;
+        this.paises = paises;
+        this.sedeCentral = sedeCentral;
+        this.cantVendedores = 0;
+        this.fechaDeEntrada = LocalDate.now();
+    }
 
     public EmpresaDTO(){
         this.areas = new ArrayList<>();

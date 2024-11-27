@@ -8,19 +8,19 @@ public abstract class UsuarioDTO{
     private String usuario;
     private String contraseña;
     
-    public void setContraseña(String contraseña){
+    public void setContrasenia(String contraseña){
         this.contraseña = contraseña;
     }
     
-    public String getContraseña(){
+    public String getContrasenia(){
         return contraseña;
     }
     
-    public void setUs(String usuario){
+    public void setUsuario(String usuario){
         this.usuario = usuario;
     }
     
-    public String getUs(){
+    public String getUsuario(){
         return usuario;
     }
 }

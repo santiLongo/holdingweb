@@ -103,4 +103,37 @@ public class AreaDAO {
         return areas;
     }
     
+    public void altaArea(AreaDTO area){
+        try {
+            Connection con = DriverManager.getConnection(dbFullURL, dbUser, dbPswd);
+            Statement stmt = con.createStatement(); 
+            stmt.executeUpdate("INSERT INTO `area`(`nombre`, `descripcion`) "
+                    + "VALUES ('"+area.getNombre()+"','"+area.getDescripcion()+"')");
+            stmt.close();
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public ArrayList<AreaDTO> traerAreas(){
+        ArrayList<AreaDTO> areas = new ArrayList<>();
+        try {
+            Connection con = DriverManager.getConnection(dbFullURL, dbUser, dbPswd);
+            Statement stmt = con.createStatement(); 
+            stmt.execute("SELECT a.id "
+                    + "FROM area a;"); 
+            ResultSet rs = stmt.getResultSet(); 
+            while(rs.next()){
+                areas.add(cargarArea(rs.getInt(1)));
+            }
+            stmt.close();
+            con.close();
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return areas;
+    }
+    
 }

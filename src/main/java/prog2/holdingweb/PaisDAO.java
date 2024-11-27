@@ -74,4 +74,36 @@ public class PaisDAO {
         return paises;
     }
     
+    public ArrayList<PaisDTO> traerPaises(){
+        ArrayList<PaisDTO> paises = new ArrayList<>();
+        try {
+            Connection con = DriverManager.getConnection(dbFullURL, dbUser, dbPswd);
+            Statement stmt = con.createStatement(); 
+            stmt.execute("SELECT p.id"
+                    + "FROM pais p"); 
+            ResultSet rs = stmt.getResultSet(); 
+            while(rs.next()){
+                paises.add(cargarPais(rs.getInt(1)));
+            }
+            stmt.close();
+            con.close();
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return paises;
+    }
+    
+    public void altaPais(PaisDTO pais){
+        try {
+            Connection con = DriverManager.getConnection(dbFullURL, dbUser, dbPswd);
+            Statement stmt = con.createStatement(); 
+            stmt.executeUpdate("INSERT INTO `pais`(`nombre`, `capital`, `cantHabitantes`, `pbi`) "
+                    + "VALUES ('"+pais.getNombre()+"','"+pais.getCapital()+"','"+pais.getCantidadHabitantes()+"','"+pais.getPbi()+"')");
+            stmt.close();
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

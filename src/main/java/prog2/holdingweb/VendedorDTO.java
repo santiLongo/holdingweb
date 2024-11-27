@@ -18,8 +18,8 @@ public class VendedorDTO extends UsuarioDTO{
     }
     
     public VendedorDTO(int codigo, String usuario, String contrasenia, String nombre, String date, String direccion, EmpresaDTO empresa, VendedorDTO lider) {
-        setUs(usuario);
-        setContraseña(contrasenia);
+        setUsuario(usuario);
+        setContrasenia(contrasenia);
         this.codigo = codigo;
         this.nombre = nombre;
         this.direccion = direccion;
@@ -28,15 +28,23 @@ public class VendedorDTO extends UsuarioDTO{
         this.lider = lider;
     }
     
-    public VendedorDTO(int codigo, String usuario, String contrasenia, String nombre, String direccion, EmpresaDTO empresa, VendedorDTO lider) {
-        setUs(usuario);
-        setContraseña(contrasenia);
-        this.codigo = codigo;
+    public VendedorDTO(String usuario, String contrasenia, String nombre, String direccion, VendedorDTO lider) {
+        setUsuario(usuario);
+        setContrasenia(contrasenia);
+        this.nombre = nombre;
+        this.direccion = direccion;
+        this.fechaEntrada = LocalDate.now();
+        this.empresa = lider.getEmpresa();
+        this.lider = lider;
+    }
+    
+    public VendedorDTO(String usuario, String contrasenia, String nombre, String direccion, EmpresaDTO empresa) {
+        setUsuario(usuario);
+        setContrasenia(contrasenia);
         this.nombre = nombre;
         this.direccion = direccion;
         this.fechaEntrada = LocalDate.now();
         this.empresa = empresa;
-        this.lider = lider;
     }
 
     public ArrayList<VendedorDTO> getReclutas() {

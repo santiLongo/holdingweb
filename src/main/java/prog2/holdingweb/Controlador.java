@@ -2,7 +2,7 @@ package prog2.holdingweb;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model; // Importación correcta de Model
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,10 +17,10 @@ public class Controlador {
 
     @GetMapping("/")
     public String mostrarInicio() {
-        if(!adminDAO.existe()){
-            return "altaAdmin";// vista dar de alta admin
+        if(adminDAO.existe()){
+            return "index";
         }
-        return "index"; // Vista en /vistas/index.jsp
+        return "altaAdmin";// vista dar de alta admin
     }
     
     @PostMapping("/")
@@ -36,7 +36,7 @@ public class Controlador {
             @RequestParam(value = "usuario", required = true) String usuario,
             @RequestParam(value = "contrasenia", required = true) String contrasenia) {
         String tipoUser = usuarioDAO.getTipoUsuario(usuario, contrasenia);
-        model.addAttribute("usuario", usuarioDAO.getUsuario()); // Agregar datos al modelo
+        model.addAttribute("usuario", usuarioDAO.getUsuario()); 
         
         if(tipoUser.equals("")){
             return "errorUsuario";

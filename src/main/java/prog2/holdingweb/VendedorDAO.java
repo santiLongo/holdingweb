@@ -96,4 +96,36 @@ public class VendedorDAO {
         return cantidadVendedores;
     }
     
+    public ArrayList<VendedorDTO> traerVendedores(){
+        ArrayList<VendedorDTO> vendedores = new ArrayList<>();
+        try {
+            Connection con = DriverManager.getConnection(dbFullURL, dbUser, dbPswd);
+            Statement stmt = con.createStatement(); 
+            stmt.execute("SELECT v.id "
+                    + "FROM vendedor v;"); 
+            ResultSet rs = stmt.getResultSet(); 
+            while(rs.next()){
+                vendedores.add(cargarVendedor(rs.getInt(1)));
+            }
+            stmt.close();
+            con.close();
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return vendedores;
+    }
+    
+    public void altaVendedor(VendedorDTO vendedor){
+        try {
+            Connection con = DriverManager.getConnection(dbFullURL, dbUser, dbPswd);
+            Statement stmt = con.createStatement(); 
+            stmt.executeUpdate("INSERT INTO `vendedor`(`usuario`, `contrasenia`, `nombre`, `fechaDeEntrada`, `direccion`, `idEmpresa`, `idLider`) "
+                    + "VALUES ('"+vendedor.getUsuario()+"','"+vendedor.getContrasenia()+"','"+vendedor.getNombre()+"','"+vendedor.getFechaEntrada()+"','"+vendedor.getDireccion()+"','"+vendedor.getEmpresa().getCodigo()+"','"+vendedor.getLider().getCodigo()+"')");
+            stmt.close();
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
