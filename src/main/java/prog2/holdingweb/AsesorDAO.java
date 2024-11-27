@@ -89,6 +89,7 @@ public class AsesorDAO {
             Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         asesora(asesor);
+        soporta(asesor);
     }
     
     private void asesora(AsesorDTO asesor){
@@ -102,6 +103,25 @@ public class AsesorDAO {
             for(AsesorDTO.Asesora asesora : asesor.getAsesora()){
                 stmt.executeUpdate("INSERT INTO `asesora`(`idEmpresa`, `idAsesor`, `fechaDeEntrada`) "
                     + "VALUES ('"+asesora.getEmpresa().getCodigo()+"','"+idAsesor+"','"+asesora.getFechaEntrada()+"')");
+            }
+            stmt.close();
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void soporta(AsesorDTO asesor){
+        try {
+            Connection con = DriverManager.getConnection(dbFullURL, dbUser, dbPswd);
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT a.id "
+                                            + "FROM asesor a"
+                                            + "WHERE a.nombre = "+asesor.getUsuario()+";");
+            int idAsesor = rs.getInt("id");
+            for(AreaDTO area : asesor.getAreas()){
+                stmt.executeUpdate("INSERT INTO `soporta`(`idAsesor`, `idArea`) "
+                    + "VALUES ('"+idAsesor+"','"+area.getCodigo()+"')");
             }
             stmt.close();
             con.close();
