@@ -7,6 +7,10 @@
         <title>Administrador Holding</title>
     </head>
     <body>
-        <h1>Bienvenido administrador ${usuario.getUs()}</h1>
+        <h1>
+            Bienvenido administrador ${usuario.getUsuario()}
+        </h1>
+        
+        
     </body>
 </html>
