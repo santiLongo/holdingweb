@@ -96,7 +96,7 @@ public class ControladorAdmin{
             @RequestParam(value = "empresas", required = true) ArrayList<EmpresaDTO> empresas){
         
         ArrayList<AsesorDTO.Asesora> asesora = AsesorDTO.Asesora.crearLista(empresas);
-        AsesorDTO asesor = new AsesorDTO(usuario, contrasenia, nombre, direccion, areas, asesora);
+        AsesorDTO asesor = new AsesorDTO(nombre, direccion, areas, asesora);
         asesorDAO.altaAsesor(asesor);
         model.addAttribute("asesor", asesor);
         return "asesor";

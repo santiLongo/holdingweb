@@ -12,7 +12,7 @@ import org.springframework.web.servlet.view.JstlView;
  
 @Configuration 
 @ComponentScan("prog2.holdingweb")
-@EnableWebMvc 
+@EnableWebMvc
 public class AppConfig implements WebMvcConfigurer { 
  
     @Override 
@@ -28,7 +28,11 @@ public class AppConfig implements WebMvcConfigurer {
         vr.setSuffix(".jsp"); 
         return vr; 
     } 
- 
+    
+    
+    @Bean(name = "hibernateDir")
+    public String getHibernateDir() { return "hibernate.cfg.xml"; }
+            
     @Bean(name = "dbName") 
     public String getDBName() { return "holding"; } 
  

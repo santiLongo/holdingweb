@@ -8,11 +8,15 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 @Repository
 public class UsuarioDAO {
     
-    private final String dbFullURL; 
+    private final String dbFullURL;
+    private final String hibernateDir;
     private final String dbUser; 
     private final String dbPswd; 
     private UsuarioDTO usuario;
@@ -25,11 +29,14 @@ public class UsuarioDAO {
     public UsuarioDAO( 
             @Qualifier("dbName") String dbName, 
             @Qualifier("dbURL")  String dbURL, 
-            @Qualifier("dbUser") String dbUser, 
+            @Qualifier("dbUser") String dbUser,
+            @Qualifier("hibernateDir") String hibernateDir,
             @Qualifier("dbPswd") String dbPswd) { 
         dbFullURL = "jdbc:mysql://" + dbURL + "/" + dbName; 
         this.dbUser = dbUser; 
         this.dbPswd = dbPswd; 
+        this.hibernateDir = hibernateDir;
+
     }
     
     public String getTipoUsuario(String us, String cont) { 
@@ -92,6 +99,22 @@ public class UsuarioDAO {
            System.err.println(e.getMessage()); 
        } 
    }
+   
+   public void darAlta(String usuario, String contrasenia){
+        
+        SessionFactory sessionFactory = new 
+        Configuration().configure(hibernateDir).addAnnotatedClass(UsuarioDTO.class).buildSessionFactory();
+        
+        Session session = sessionFactory.openSession();
+        
+        try{
+            
+            //usuario = new UsuarioDTO()
+            
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
 
     public UsuarioDTO getUsuario() {
         return usuario;

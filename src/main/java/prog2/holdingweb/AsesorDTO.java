@@ -2,9 +2,15 @@ package prog2.holdingweb;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import org.springframework.stereotype.Repository;
 
 public class AsesorDTO extends UsuarioDTO{
+    
+    @OneToOne
+    @JoinColumn(name = "id", referencedColumnName = "id")
+    private UsuarioDTO usuario;
     
     private int codigo;
     private String nombre;
@@ -12,9 +18,8 @@ public class AsesorDTO extends UsuarioDTO{
     private ArrayList<AreaDTO> areas;
     private ArrayList<Asesora> asesora;
     
-    public AsesorDTO(String usuario, String contrasenia, String nombre, String direccion, ArrayList<AreaDTO> areas, ArrayList<Asesora> asesora){
-        setUsuario(usuario);
-        setContrasenia(contrasenia);
+    public AsesorDTO(String nombre, String direccion, ArrayList<AreaDTO> areas, ArrayList<Asesora> asesora){
+        
         this.nombre = nombre;
         this.direccion = direccion;
         this.areas = areas;

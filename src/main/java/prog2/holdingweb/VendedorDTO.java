@@ -2,8 +2,14 @@ package prog2.holdingweb;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 public class VendedorDTO extends UsuarioDTO{
+    
+    @OneToOne
+    @JoinColumn(name = "id", referencedColumnName = "id")
+    private UsuarioDTO usuario;
     
     private String nombre;
     private LocalDate fechaEntrada;
@@ -18,8 +24,7 @@ public class VendedorDTO extends UsuarioDTO{
     }
     
     public VendedorDTO(int codigo, String usuario, String contrasenia, String nombre, String date, String direccion, EmpresaDTO empresa, VendedorDTO lider) {
-        setUsuario(usuario);
-        setContrasenia(contrasenia);
+        super(usuario, contrasenia, "VENDEDOR");
         this.codigo = codigo;
         this.nombre = nombre;
         this.direccion = direccion;
