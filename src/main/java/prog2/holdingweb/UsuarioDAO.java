@@ -44,51 +44,21 @@ public class UsuarioDAO {
        try { 
            Connection con = DriverManager.getConnection(dbFullURL, dbUser, dbPswd); 
            Statement stmt = con.createStatement(); 
-           stmt.execute("SELECT 'administrador' AS tipo_usuario, administrador.id\n" +
-                        "FROM administrador\n" +
-                        "WHERE usuario = '"+us+"' AND contrasenia = '"+cont+"'\n" +
-                        "\n" +
-                        "UNION ALL\n" +
-                        "\n" +
-                        "SELECT 'vendedor' AS tipo_usuario, vendedor.id\n" +
-                        "FROM vendedor\n" +
-                        "WHERE usuario = '"+us+"' AND contrasenia = '"+cont+"'\n" +
-                        "\n" +
-                        "UNION ALL\n" +
-                        "\n" +
-                        "SELECT 'asesor' AS tipo_usuario, asesor.id\n" +
-                        "FROM asesor\n" +
-                        "WHERE usuario = '"+us+"' AND contrasenia = '"+cont+"';"); 
-           ResultSet rs = stmt.getResultSet(); 
-           if(rs.next()){
-               resultado = rs.getString("tipo_usuario");
-               cargarUsuario(rs.getString(1),rs.getInt("id"));
-           } 
-           stmt.close();
-           con.close();
-           rs.close(); 
-       } catch (SQLException e) { 
-           System.err.println(e.getMessage()); 
-       } 
-       return resultado; 
-   }
-    
-   private void cargarUsuario(String tipo, int codigo){
-       try { 
-           Connection con = DriverManager.getConnection(dbFullURL, dbUser, dbPswd); 
-           Statement stmt = con.createStatement(); 
-           stmt.execute("SELECT * FROM " + tipo + " WHERE id = " + codigo + ""); 
+           stmt.execute("SELECT * FROM `usuario` WHERE usuario = '" + us + "' AND contrasenia = '" + cont +"'"); 
            ResultSet rs = stmt.getResultSet(); 
            rs.next();
-           switch (tipo){
-               case "administrador":
-                   this.usuario = new AdministradorDTO(rs.getString("usuario"),rs.getString("contrasenia"));
+           switch (rs.getString("tipo")){
+               case "ADMIN":
+                   resultado = "administrador";
+                   this.usuario = new AdministradorDTO(rs.getString(2),rs.getString(3));
                    break;
-               case "vendedor":
-                   this.usuario = vendedorDAO.cargarVendedor(codigo);
+               case "VENDEDOR":
+                   resultado = "vendedor";
+                   this.usuario = vendedorDAO.cargarVendedor(rs.getInt("id"));
                    break;
-               case "asesor":
-                   this.usuario = asesorDAO.cargarAsesor(codigo);
+               case "ASESOR":
+                   resultado = "asesor";
+                   this.usuario = asesorDAO.cargarAsesor(rs.getInt("id"));
                    break;
            }
            con.close();
@@ -97,7 +67,8 @@ public class UsuarioDAO {
            rs.close();
        } catch (SQLException e) { 
            System.err.println(e.getMessage()); 
-       } 
+       }  
+       return resultado; 
    }
    
    public void darAlta(String usuario, String contrasenia){
