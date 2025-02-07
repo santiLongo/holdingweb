@@ -39,7 +39,7 @@ public class UsuarioDAO {
 
     }
     
-    public String getTipoUsuario(String us, String cont) { 
+    public String cargarUsuario(String us, String cont) { 
        String resultado = "";
        try { 
            Connection con = DriverManager.getConnection(dbFullURL, dbUser, dbPswd); 

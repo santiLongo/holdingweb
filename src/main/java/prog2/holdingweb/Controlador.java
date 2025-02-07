@@ -35,7 +35,7 @@ public class Controlador {
             Model model,
             @RequestParam(value = "usuario", required = true) String usuario,
             @RequestParam(value = "contrasenia", required = true) String contrasenia) {
-        String tipoUser = usuarioDAO.getTipoUsuario(usuario, contrasenia);
+        String tipoUser = usuarioDAO.cargarUsuario(usuario, contrasenia);
         model.addAttribute("usuario", usuarioDAO.getUsuario()); 
         
         if(tipoUser.equals("")){
