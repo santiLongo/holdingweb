@@ -70,23 +70,6 @@ public class UsuarioDAO {
        }  
        return resultado; 
    }
-   
-   public void darAlta(String usuario, String contrasenia){
-        
-        SessionFactory sessionFactory = new 
-        Configuration().configure(hibernateDir).addAnnotatedClass(UsuarioDTO.class).buildSessionFactory();
-        
-        Session session = sessionFactory.openSession();
-        
-        try{
-            
-            //usuario = new UsuarioDTO()
-            
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-    }
-
     public UsuarioDTO getUsuario() {
         return usuario;
     }
