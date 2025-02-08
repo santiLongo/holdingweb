@@ -22,7 +22,7 @@
                         Su codigo de vendedor es:
                     </h2>
                     <p>
-                        ${usuario.codigo}
+                        ${usuario.id}
                     </p>
                 </article>
                 <article id="artDireccion">
@@ -38,7 +38,7 @@
                         Inicio actividades la fecha: 
                     </h2>
                     <p>
-                        ${usuario.fechaEntrada}
+                        ${usuario.fechaDeEntrada}
                     </p>
                 </article>
                 <article id="artEmpresa">
@@ -51,7 +51,7 @@
                 </article>
                 <article id="artLider">
                     <c:choose>
-                        <c:when test = "${usuario.lider.codigo == 0}">
+                        <c:when test = "${usuario.lider.id == 0}">
                             <h2>
                                 No tiene lider.
                             </h2>

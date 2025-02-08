@@ -1,11 +1,30 @@
 package prog2.holdingweb;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "pais")
 public class PaisDTO{
     
-    private int codigo;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    @Column(nullable = false)
     private String nombre;
+    
+    @Column(nullable = false)
     private String capital;
+    
+    @Column(nullable = false)
     private int pbi;
+    
+    @Column(nullable = false)
     private int cantidadHabitantes;
     
     public PaisDTO(String nombre, String capital, int pbi, int cantidadHabitantes){
@@ -15,7 +34,7 @@ public class PaisDTO{
         this.cantidadHabitantes = cantidadHabitantes;
     }
     
-    public PaisDTO(){
+    protected PaisDTO(){
     }
 
     public String getNombre() {
@@ -50,11 +69,11 @@ public class PaisDTO{
         this.cantidadHabitantes = cantidadHabitantes;
     }
 
-    public int getCodigo() {
-        return codigo;
+    public Long getCodigo() {
+        return id;
     }
 
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
+    public void setId(Long codigo) {
+        this.id = id;
     }
 }

@@ -1,9 +1,24 @@
 package prog2.holdingweb;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "area")
 public class AreaDTO{
     
-    private int codigo;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    @Column(nullable = false)
     private String nombre;
+    
+    @Column(nullable = false)
     private String descripcion;
     
     public AreaDTO(String nombre, String descripcion){
@@ -11,7 +26,7 @@ public class AreaDTO{
         this.descripcion = descripcion;
     }
     
-    public AreaDTO(){
+    protected AreaDTO(){
     }
 
     public String getNombre() {
@@ -30,12 +45,12 @@ public class AreaDTO{
         this.descripcion = descripcion;
     }
 
-    public int getCodigo() {
-        return codigo;
+    public Long getId() {
+        return id;
     }
 
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
+    public void setId(Long id) {
+        this.id = id;
     }
     
     

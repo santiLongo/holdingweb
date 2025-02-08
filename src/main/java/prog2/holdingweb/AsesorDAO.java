@@ -64,9 +64,9 @@ public class AsesorDAO {
             stmt.execute("SELECT idEmpresa, fechaDeEntrada FROM asesora WHERE idAsesor =" + idAsesor + ""); 
             ResultSet rs = stmt.getResultSet(); 
             while (rs.next()) {
-                    EmpresaDTO empresa = empresaDAO.cargarEmpresa(rs.getInt("idEmpresa"));
-                    AsesorDTO.Asesora a = new AsesorDTO.Asesora(empresa, rs.getString("fechaDeEntrada"));
-                    asesora.add(a);
+                    EmpresaDTO empresa = empresaDAO.cargarEmpresa(rs.getLong("idEmpresa"));
+                    //AsesorDTO.Asesora a = new AsesorDTO.Asesora(empresa, rs.getString("fechaDeEntrada"));
+                    //asesora.add(a);
             }
             stmt.close();
             con.close();
@@ -102,7 +102,7 @@ public class AsesorDAO {
             int idAsesor = rs.getInt("id");
             for(AsesorDTO.Asesora asesora : asesor.getAsesora()){
                 stmt.executeUpdate("INSERT INTO `asesora`(`idEmpresa`, `idAsesor`, `fechaDeEntrada`) "
-                    + "VALUES ('"+asesora.getEmpresa().getCodigo()+"','"+idAsesor+"','"+asesora.getFechaEntrada()+"')");
+                    + "VALUES ('"+asesora.getEmpresa().getId()+"','"+idAsesor+"','"+asesora.getFechaEntrada()+"')");
             }
             stmt.close();
             con.close();
@@ -121,7 +121,7 @@ public class AsesorDAO {
             int idAsesor = rs.getInt("id");
             for(AreaDTO area : asesor.getAreas()){
                 stmt.executeUpdate("INSERT INTO `soporta`(`idAsesor`, `idArea`) "
-                    + "VALUES ('"+idAsesor+"','"+area.getCodigo()+"')");
+                    + "VALUES ('"+idAsesor+"','"+area.getId()+"')");
             }
             stmt.close();
             con.close();

@@ -33,6 +33,7 @@ public abstract class UsuarioDTO{ // Ya funciona con hibernate
     protected UsuarioDTO(){}
     
     public UsuarioDTO(String usuario, String contrasenia, String tipo){
+        this.id = id;
         this.usuario = usuario;
         this.contrasenia = contrasenia;
         this.tipo = tipo;

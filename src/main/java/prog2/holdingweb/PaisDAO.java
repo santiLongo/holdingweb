@@ -30,7 +30,7 @@ public class PaisDAO {
         this.dbPswd = dbPswd; 
     }
     
-    public PaisDTO cargarPais(int codigo){
+    public PaisDTO cargarPais(Long codigo){
         PaisDTO pais = new PaisDTO();
         try {
             Connection con = DriverManager.getConnection(dbFullURL, dbUser, dbPswd);
@@ -51,7 +51,7 @@ public class PaisDAO {
         return pais;
     }
     
-    public ArrayList<PaisDTO> cargarListaPaises(int codigoEmpresa){
+    public ArrayList<PaisDTO> cargarListaPaises(Long codigoEmpresa){
         ArrayList<PaisDTO> paises = new ArrayList<>();
         try {
             Connection con = DriverManager.getConnection(dbFullURL, dbUser, dbPswd);
@@ -63,7 +63,7 @@ public class PaisDAO {
                     + "WHERE act.idEmpresa = " +codigoEmpresa+ ");"); 
             ResultSet rs = stmt.getResultSet(); 
             while(rs.next()){
-                paises.add(cargarPais(rs.getInt(1)));
+                paises.add(cargarPais(rs.getLong(1)));
             }
             stmt.close();
             con.close();
@@ -83,7 +83,7 @@ public class PaisDAO {
                     + "FROM pais p"); 
             ResultSet rs = stmt.getResultSet(); 
             while(rs.next()){
-                paises.add(cargarPais(rs.getInt(1)));
+                paises.add(cargarPais(rs.getLong(1)));
             }
             stmt.close();
             con.close();

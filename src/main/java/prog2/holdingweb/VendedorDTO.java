@@ -2,33 +2,52 @@ package prog2.holdingweb;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "vendedor")
+@PrimaryKeyJoinColumn(name = "id")
 public class VendedorDTO extends UsuarioDTO{
     
-    @OneToOne
-    @JoinColumn(name = "id", referencedColumnName = "id")
-    private UsuarioDTO usuario;
-    
+    @Column(unique = true, nullable = false)
     private String nombre;
-    private LocalDate fechaEntrada;
-    private Long id;
+    @Column(unique = true, nullable = false)
+    private LocalDate fechaDeEntrada;
+    @Column(unique = true, nullable = false)
     private String direccion;
-    private EmpresaDTO empresa;
-    private VendedorDTO lider;
-    private ArrayList<VendedorDTO> reclutas;
     
-    public VendedorDTO(){
-        this.reclutas = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "idEmpresa", nullable = false)
+    private EmpresaDTO empresa;
+    
+    @ManyToOne
+    @JoinColumn(name = "idLider")
+    private VendedorDTO lider;
+    
+    @OneToMany(mappedBy = "lider", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<VendedorDTO> reclutas;
+    
+    protected VendedorDTO(){
     }
     
     public VendedorDTO(Long id, String usuario, String contrasenia, String nombre, String date, String direccion, EmpresaDTO empresa, VendedorDTO lider) {
         super(usuario, contrasenia, "VENDEDOR");
-        this.id = id;
         this.nombre = nombre;
         this.direccion = direccion;
-        this.fechaEntrada = LocalDate.parse(date);
+        this.fechaDeEntrada = LocalDate.parse(date);
         this.empresa = empresa;
         this.lider = lider;
     }
@@ -38,7 +57,7 @@ public class VendedorDTO extends UsuarioDTO{
         setContrasenia(contrasenia);
         this.nombre = nombre;
         this.direccion = direccion;
-        this.fechaEntrada = LocalDate.now();
+        this.fechaDeEntrada = LocalDate.now();
         this.empresa = lider.getEmpresa();
         this.lider = lider;
     }
@@ -48,15 +67,15 @@ public class VendedorDTO extends UsuarioDTO{
         setContrasenia(contrasenia);
         this.nombre = nombre;
         this.direccion = direccion;
-        this.fechaEntrada = LocalDate.now();
+        this.fechaDeEntrada = LocalDate.now();
         this.empresa = empresa;
     }
 
-    public ArrayList<VendedorDTO> getReclutas() {
+    public List<VendedorDTO> getReclutas() {
         return reclutas;
     }
     
-    public void setReclutas(ArrayList<VendedorDTO> reclutas) {
+    public void setReclutas(List<VendedorDTO> reclutas) {
         this.reclutas = reclutas;
     }
     
@@ -68,20 +87,12 @@ public class VendedorDTO extends UsuarioDTO{
         this.nombre = nombre;
     }
 
-    public LocalDate getFechaEntrada() {
-        return fechaEntrada;
+    public LocalDate getFechaDeEntrada() {
+        return fechaDeEntrada;
     }
 
-    public void setFechaEntrada(String fechaEntrada) {
-        this.fechaEntrada = LocalDate.parse(fechaEntrada);
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long codigo) {
-        this.id = id;
+    public void setFechaDeEntrada(String fechaEntrada) {
+        this.fechaDeEntrada = LocalDate.parse(fechaEntrada);
     }
 
     public String getDireccion() {

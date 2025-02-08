@@ -80,7 +80,7 @@ public class AreaDAO {
         return areas;
     }
     
-    public ArrayList<AreaDTO> cargarAreasCubre(int codigoEmpresa){
+    public ArrayList<AreaDTO> cargarAreasCubre(Long codigoEmpresa){
         ArrayList<AreaDTO> areas = new ArrayList<>();
         try {
             Connection con = DriverManager.getConnection(dbFullURL, dbUser, dbPswd);

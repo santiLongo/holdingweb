@@ -9,6 +9,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
@@ -17,6 +20,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class EmpresaDAO {
     
+    private final String hibernateDir;
     private final String dbFullURL; 
     private final String dbUser; 
     private final String dbPswd;
@@ -32,106 +36,34 @@ public class EmpresaDAO {
             @Qualifier("dbName") String dbName, 
             @Qualifier("dbURL")  String dbURL, 
             @Qualifier("dbUser") String dbUser, 
-            @Qualifier("dbPswd") String dbPswd) { 
+            @Qualifier("dbPswd") String dbPswd,
+            @Qualifier("hibernateDir") String hibernateDir) { 
         dbFullURL = "jdbc:mysql://" + dbURL + "/" + dbName; 
         this.dbUser = dbUser; 
-        this.dbPswd = dbPswd; 
+        this.dbPswd = dbPswd;
+        this.hibernateDir = hibernateDir;
     }
     
-    public EmpresaDTO cargarEmpresa(int codigo){
+    public EmpresaDTO cargarEmpresa(Long id){
         EmpresaDTO empresa = new EmpresaDTO();
-        empresa.setCodigo(codigo);
+        SessionFactory sessionFactory = new Configuration()
+        .configure(hibernateDir)  
+        .buildSessionFactory();
+        Session session = sessionFactory.openSession();
+
         try {
-            Connection con = DriverManager.getConnection(dbFullURL, dbUser, dbPswd);
-            Statement stmt = con.createStatement(); 
-            stmt.execute("SELECT * FROM empresa WHERE id = " + codigo + ""); 
-            ResultSet rs = stmt.getResultSet(); 
-            rs.next();
-            empresa.setNombre(rs.getString("nombre"));
-            empresa.setFacturacion(rs.getInt("facturacion"));
-            empresa.setCantVendedores(vendedorDAO.cantidadVendedores(codigo));
-            empresa.setFechaDeEntrada(rs.getString("fechaDeEntrada"));
-            empresa.setSedeCentral(paisDAO.cargarPais(rs.getInt("ipPaisSede")));
-            empresa.setPaises(paisDAO.cargarListaPaises(codigo));
-            empresa.setAreas(areaDAO.cargarAreasCubre(codigo));
-            stmt.close();
-            con.close();
-            rs.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+            session.beginTransaction();
+            empresa = session.find(EmpresaDTO.class, id);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
         }
         return empresa;
     }
     
-    public ArrayList<EmpresaDTO> traerEmpresas(){
-       ArrayList<EmpresaDTO> empresas = new ArrayList<>();
-       try {
-            Connection con = DriverManager.getConnection(dbFullURL, dbUser, dbPswd);
-            Statement stmt = con.createStatement(); 
-            stmt.execute("SELECT e.id"
-                    + "FROM empresa e"); 
-            ResultSet rs = stmt.getResultSet(); 
-            while(rs.next()){
-                empresas.add(cargarEmpresa(rs.getInt(1)));
-            }
-            stmt.close();
-            con.close();
-            rs.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-       return empresas;
-    }
-    
     public void altaEmpresa(EmpresaDTO empresa){
-        try {
-            Connection con = DriverManager.getConnection(dbFullURL, dbUser, dbPswd);
-            Statement stmt = con.createStatement(); 
-            stmt.executeUpdate("INSERT INTO `empresa`(`nombre`, `facturacion`, `cantidadVendedores`, `fechaDeEntrada`, `idPaisSede`) "
-                    + "VALUES ('"+empresa.getNombre()+"','"+empresa.getFacturacion()+"','"+empresa.getCantVendedores()+"','"+empresa.getFechaDeEntrada()+"','"+empresa.getSedeCentral().getCodigo()+"')");
-            stmt.close();
-            con.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        actua(empresa);
-        cubre(empresa);
-    }
-    
-    public void actua(EmpresaDTO empresa){
-        try {
-            Connection con = DriverManager.getConnection(dbFullURL, dbUser, dbPswd);
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT e.id "
-                                            + "FROM empresa e"
-                                            + "WHERE e.nombre = "+empresa.getNombre()+";");
-            int idEmpresa = rs.getInt("id");
-            for(PaisDTO pais : empresa.getPaises()){
-                stmt.executeUpdate("INSERT INTO `actua`(`idEmpresa`, `idPais`) "
-                    + "VALUES ('"+idEmpresa+"','"+pais.getCodigo()+"')");
-            }
-            stmt.close();
-            con.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    public void cubre(EmpresaDTO empresa){
-        try {
-            Connection con = DriverManager.getConnection(dbFullURL, dbUser, dbPswd);
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT e.id "
-                                            + "FROM empresa e"
-                                            + "WHERE e.nombre = "+empresa.getNombre()+";");
-            int idEmpresa = rs.getInt("id");
-            for(AreaDTO area : empresa.getAreas()){
-                stmt.executeUpdate("INSERT INTO `cubre`(`idEmpresa`, `idArea`) "
-                    + "VALUES ('"+idEmpresa+"','"+area.getCodigo()+"')");
-            }
-            stmt.close();
-            con.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
     }
 }

@@ -2,20 +2,45 @@ package prog2.holdingweb;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Embeddable;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 import org.springframework.stereotype.Repository;
 
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "asesor")
+@PrimaryKeyJoinColumn(name = "id")
 public class AsesorDTO extends UsuarioDTO{
     
-    @OneToOne
-    @JoinColumn(name = "id", referencedColumnName = "id")
-    private UsuarioDTO usuario;
-    
-    private Long id;
+    @Column(nullable = false)
     private String nombre;
+    
+    @Column(nullable = false)
     private String direccion;
+    
+    @ManyToMany
+    @JoinTable(
+        name = "soporta",
+        joinColumns = @JoinColumn(name = "idAsesor"),
+        inverseJoinColumns = @JoinColumn(name = "idArea")
+    )
     private ArrayList<AreaDTO> areas;
+    
+    @ElementCollection
+    @CollectionTable(name = "asesora", 
+        joinColumns = @JoinColumn(name = "idAsesor"))
     private ArrayList<Asesora> asesora;
     
     public AsesorDTO(String nombre, String direccion, ArrayList<AreaDTO> areas, ArrayList<Asesora> asesora){
@@ -31,9 +56,14 @@ public class AsesorDTO extends UsuarioDTO{
         this.asesora = new ArrayList<>();
     }
     
+    @Embeddable
     public static class Asesora{
         
+        @ManyToOne
+        @JoinColumn(name = "idEmpresa", nullable = false)
         private EmpresaDTO empresa;
+        
+        @Column(nullable = false)
         private LocalDate fechaEntrada;
         
         public Asesora(EmpresaDTO empresa){
@@ -41,9 +71,7 @@ public class AsesorDTO extends UsuarioDTO{
             this.fechaEntrada = LocalDate.now();
         }
         
-        public Asesora(EmpresaDTO empresa, String fechaEntrada){
-            this.empresa = empresa;
-            this.fechaEntrada = LocalDate.parse(fechaEntrada);
+        protected Asesora(){ 
         }
 
         public EmpresaDTO getEmpresa() {
@@ -61,14 +89,6 @@ public class AsesorDTO extends UsuarioDTO{
             }
             return asesora;
         }
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getNombre() {
