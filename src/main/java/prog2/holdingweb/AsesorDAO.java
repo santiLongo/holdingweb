@@ -34,19 +34,19 @@ public class AsesorDAO {
         this.dbPswd = dbPswd; 
     }
     
-    public AsesorDTO cargarAsesor(int codigo){
+    public AsesorDTO cargarAsesor(Long id){
         AsesorDTO asesor = new AsesorDTO();
-        asesor.setCodigo(codigo);
+        asesor.setId(id);
         try {
             Connection con = DriverManager.getConnection(dbFullURL, dbUser, dbPswd);
             Statement stmt = con.createStatement(); 
-            stmt.execute("SELECT * FROM asesor WHERE id = " + codigo + ""); 
+            stmt.execute("SELECT * FROM asesor WHERE id = " + id + ""); 
             ResultSet rs = stmt.getResultSet(); 
             rs.next();
             asesor.setNombre(rs.getString("nombre"));
             asesor.setDireccion(rs.getString("direccion"));
-            asesor.setAreas(areaDAO.cargarAreasSoporta(codigo));
-            asesor.setAsesora(cargarAsesora(codigo));
+            asesor.setAreas(areaDAO.cargarAreasSoporta(id));
+            asesor.setAsesora(cargarAsesora(id));
             stmt.close();
             con.close();
             rs.close();
@@ -56,12 +56,12 @@ public class AsesorDAO {
         return asesor;
     }
     
-    private ArrayList<AsesorDTO.Asesora> cargarAsesora(int codigoAsesor){
+    private ArrayList<AsesorDTO.Asesora> cargarAsesora(Long idAsesor){
         ArrayList<AsesorDTO.Asesora> asesora = new ArrayList<>();
         try {
             Connection con = DriverManager.getConnection(dbFullURL, dbUser, dbPswd);
             Statement stmt = con.createStatement(); 
-            stmt.execute("SELECT idEmpresa, fechaDeEntrada FROM asesora WHERE idAsesor =" + codigoAsesor + ""); 
+            stmt.execute("SELECT idEmpresa, fechaDeEntrada FROM asesora WHERE idAsesor =" + idAsesor + ""); 
             ResultSet rs = stmt.getResultSet(); 
             while (rs.next()) {
                     EmpresaDTO empresa = empresaDAO.cargarEmpresa(rs.getInt("idEmpresa"));

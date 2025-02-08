@@ -32,21 +32,21 @@ public class VendedorDAO {
         this.dbPswd = dbPswd; 
     }
     
-    public VendedorDTO cargarVendedor(int codigo){
+    public VendedorDTO cargarVendedor(Long id){
         VendedorDTO vendedor = new VendedorDTO();
-        vendedor.setCodigo(codigo);
+        vendedor.setId(id);
         try {
             Connection con = DriverManager.getConnection(dbFullURL, dbUser, dbPswd);
             Statement stmt = con.createStatement(); 
-            stmt.execute("SELECT * FROM vendedor WHERE id = " + codigo + ""); 
+            stmt.execute("SELECT * FROM vendedor WHERE id = " + id + ""); 
             ResultSet rs = stmt.getResultSet(); 
             rs.next();
             vendedor.setNombre(rs.getString("nombre"));
             vendedor.setFechaEntrada(rs.getString("fechaDeEntrada"));
             vendedor.setDireccion(rs.getString("direccion"));
             vendedor.setEmpresa(empresaDAO.cargarEmpresa(rs.getInt("idEmpresa")));
-            vendedor.setLider(cargarVendedor(rs.getInt("idLider")));
-            vendedor.setReclutas(listaReclutas(codigo));
+            vendedor.setLider(cargarVendedor(rs.getLong("idLider")));
+            vendedor.setReclutas(listaReclutas(id));
             stmt.close();
             con.close();
             rs.close();
@@ -56,15 +56,15 @@ public class VendedorDAO {
         return vendedor;
     }
     
-    private ArrayList<VendedorDTO> listaReclutas(int codigo){
+    private ArrayList<VendedorDTO> listaReclutas(Long id){
        ArrayList<VendedorDTO> reclutas = new ArrayList<>();
        try {
             Connection con = DriverManager.getConnection(dbFullURL, dbUser, dbPswd);
             Statement stmt = con.createStatement(); 
-            stmt.execute("SELECT id FROM vendedor WHERE idLider = " + codigo + ""); 
+            stmt.execute("SELECT id FROM vendedor WHERE idLider = " + id + ""); 
             ResultSet rs = stmt.getResultSet(); 
             while(rs.next()){
-                reclutas.add(cargarVendedor(rs.getInt("id")));
+                reclutas.add(cargarVendedor(rs.getLong("id")));
             }
             stmt.close();
             con.close();
@@ -105,7 +105,7 @@ public class VendedorDAO {
                     + "FROM vendedor v;"); 
             ResultSet rs = stmt.getResultSet(); 
             while(rs.next()){
-                vendedores.add(cargarVendedor(rs.getInt(1)));
+                vendedores.add(cargarVendedor(rs.getLong(1)));
             }
             stmt.close();
             con.close();
@@ -121,7 +121,7 @@ public class VendedorDAO {
             Connection con = DriverManager.getConnection(dbFullURL, dbUser, dbPswd);
             Statement stmt = con.createStatement(); 
             stmt.executeUpdate("INSERT INTO `vendedor`(`usuario`, `contrasenia`, `nombre`, `fechaDeEntrada`, `direccion`, `idEmpresa`, `idLider`) "
-                    + "VALUES ('"+vendedor.getUsuario()+"','"+vendedor.getContrasenia()+"','"+vendedor.getNombre()+"','"+vendedor.getFechaEntrada()+"','"+vendedor.getDireccion()+"','"+vendedor.getEmpresa().getCodigo()+"','"+vendedor.getLider().getCodigo()+"')");
+                    + "VALUES ('"+vendedor.getUsuario()+"','"+vendedor.getContrasenia()+"','"+vendedor.getNombre()+"','"+vendedor.getFechaEntrada()+"','"+vendedor.getDireccion()+"','"+vendedor.getEmpresa().getCodigo()+"','"+vendedor.getLider().getId()+"')");
             stmt.close();
             con.close();
         } catch (SQLException ex) {

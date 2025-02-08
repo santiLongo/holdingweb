@@ -13,7 +13,7 @@ public class VendedorDTO extends UsuarioDTO{
     
     private String nombre;
     private LocalDate fechaEntrada;
-    private int codigo;
+    private Long id;
     private String direccion;
     private EmpresaDTO empresa;
     private VendedorDTO lider;
@@ -23,9 +23,9 @@ public class VendedorDTO extends UsuarioDTO{
         this.reclutas = new ArrayList<>();
     }
     
-    public VendedorDTO(int codigo, String usuario, String contrasenia, String nombre, String date, String direccion, EmpresaDTO empresa, VendedorDTO lider) {
+    public VendedorDTO(Long id, String usuario, String contrasenia, String nombre, String date, String direccion, EmpresaDTO empresa, VendedorDTO lider) {
         super(usuario, contrasenia, "VENDEDOR");
-        this.codigo = codigo;
+        this.id = id;
         this.nombre = nombre;
         this.direccion = direccion;
         this.fechaEntrada = LocalDate.parse(date);
@@ -76,12 +76,12 @@ public class VendedorDTO extends UsuarioDTO{
         this.fechaEntrada = LocalDate.parse(fechaEntrada);
     }
 
-    public int getCodigo() {
-        return codigo;
+    public Long getId() {
+        return id;
     }
 
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
+    public void setId(Long codigo) {
+        this.id = id;
     }
 
     public String getDireccion() {

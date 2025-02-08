@@ -57,7 +57,7 @@ public class AreaDAO {
         return area;
     }
     
-    public ArrayList<AreaDTO> cargarAreasSoporta(int codigoAsesor){
+    public ArrayList<AreaDTO> cargarAreasSoporta(Long idAsesor){
         ArrayList<AreaDTO> areas = new ArrayList<>();
         try {
             Connection con = DriverManager.getConnection(dbFullURL, dbUser, dbPswd);
@@ -66,7 +66,7 @@ public class AreaDAO {
                     + "FROM area a "
                     + "WHERE a.id IN (SELECT s.idArea "
                     + "FROM soporta s "
-                    + "WHERE s.idAsesor = " +codigoAsesor+ ");"); 
+                    + "WHERE s.idAsesor = " +idAsesor+ ");"); 
             ResultSet rs = stmt.getResultSet(); 
             while(rs.next()){
                 areas.add(cargarArea(rs.getInt(1)));

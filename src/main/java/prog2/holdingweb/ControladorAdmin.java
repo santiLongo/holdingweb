@@ -119,7 +119,7 @@ public class ControladorAdmin{
             @RequestParam(value = "empresa", required = true) EmpresaDTO empresa){
         
         VendedorDTO vendedor;
-        if(lider.getCodigo() == 0){
+        if(lider.getId() == 0){
             vendedor = new VendedorDTO(usuario, contrasenia, nombre, direccion, empresa);
         }else vendedor = new VendedorDTO(usuario, contrasenia, nombre, direccion, lider);
         
