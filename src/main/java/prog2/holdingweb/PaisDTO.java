@@ -24,14 +24,14 @@ public class PaisDTO{
     @Column(nullable = false)
     private int pbi;
     
-    @Column(nullable = false)
-    private int cantidadHabitantes;
+    @Column(name = "cantHabitantes", nullable = false)
+    private int cantHabitantes;
     
-    public PaisDTO(String nombre, String capital, int pbi, int cantidadHabitantes){
+    public PaisDTO(String nombre, String capital, int pbi, int cantHabitantes){
         this.nombre = nombre;
         this.capital = capital;
         this.pbi = pbi;
-        this.cantidadHabitantes = cantidadHabitantes;
+        this.cantHabitantes = cantHabitantes;
     }
     
     protected PaisDTO(){
@@ -61,12 +61,12 @@ public class PaisDTO{
         this.pbi = pbi;
     }
 
-    public int getCantidadHabitantes() {
-        return cantidadHabitantes;
+    public int getCantHabitantes() {
+        return cantHabitantes;
     }
 
-    public void setCantidadHabitantes(int cantidadHabitantes) {
-        this.cantidadHabitantes = cantidadHabitantes;
+    public void setCantHabitantes(int cantidadHabitantes) {
+        this.cantHabitantes = cantidadHabitantes;
     }
 
     public Long getCodigo() {

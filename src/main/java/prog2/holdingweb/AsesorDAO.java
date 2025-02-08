@@ -8,6 +8,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
@@ -15,9 +18,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class AsesorDAO {
     
-    private final String dbFullURL; 
-    private final String dbUser; 
-    private final String dbPswd;
+    private final String hibernateDir;
     @Autowired
     private AreaDAO areaDAO;
     @Autowired
@@ -25,108 +26,30 @@ public class AsesorDAO {
     
     @Autowired 
     public AsesorDAO( 
-            @Qualifier("dbName") String dbName, 
-            @Qualifier("dbURL")  String dbURL, 
-            @Qualifier("dbUser") String dbUser, 
-            @Qualifier("dbPswd") String dbPswd) { 
-        dbFullURL = "jdbc:mysql://" + dbURL + "/" + dbName; 
-        this.dbUser = dbUser; 
-        this.dbPswd = dbPswd; 
+            @Qualifier("hibernateDir") String hibernateDir) {
+        this.hibernateDir = hibernateDir;
     }
     
     public AsesorDTO cargarAsesor(Long id){
         AsesorDTO asesor = new AsesorDTO();
-        asesor.setId(id);
+        SessionFactory sessionFactory = new Configuration()
+        .configure(hibernateDir)  
+        .buildSessionFactory();
+        Session session = sessionFactory.openSession();
+
         try {
-            Connection con = DriverManager.getConnection(dbFullURL, dbUser, dbPswd);
-            Statement stmt = con.createStatement(); 
-            stmt.execute("SELECT * FROM asesor WHERE id = " + id + ""); 
-            ResultSet rs = stmt.getResultSet(); 
-            rs.next();
-            asesor.setNombre(rs.getString("nombre"));
-            asesor.setDireccion(rs.getString("direccion"));
-            asesor.setAreas(areaDAO.cargarAreasSoporta(id));
-            asesor.setAsesora(cargarAsesora(id));
-            stmt.close();
-            con.close();
-            rs.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+            session.beginTransaction();
+            asesor = session.find(AsesorDTO.class, id);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
         }
         return asesor;
     }
     
-    private ArrayList<AsesorDTO.Asesora> cargarAsesora(Long idAsesor){
-        ArrayList<AsesorDTO.Asesora> asesora = new ArrayList<>();
-        try {
-            Connection con = DriverManager.getConnection(dbFullURL, dbUser, dbPswd);
-            Statement stmt = con.createStatement(); 
-            stmt.execute("SELECT idEmpresa, fechaDeEntrada FROM asesora WHERE idAsesor =" + idAsesor + ""); 
-            ResultSet rs = stmt.getResultSet(); 
-            while (rs.next()) {
-                    EmpresaDTO empresa = empresaDAO.cargarEmpresa(rs.getLong("idEmpresa"));
-                    //AsesorDTO.Asesora a = new AsesorDTO.Asesora(empresa, rs.getString("fechaDeEntrada"));
-                    //asesora.add(a);
-            }
-            stmt.close();
-            con.close();
-            rs.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return asesora;
-    }
-    
     public void altaAsesor(AsesorDTO asesor){
-        try {
-            Connection con = DriverManager.getConnection(dbFullURL, dbUser, dbPswd);
-            Statement stmt = con.createStatement(); 
-            stmt.executeUpdate("INSERT INTO `asesor`(`usuario`, `contrasenia`, `nombre`, `direccion`) "
-                    + "VALUES ('"+asesor.getUsuario()+"','"+asesor.getContrasenia()+"','"+asesor.getNombre()+"','"+asesor.getDireccion()+"')");
-            stmt.close();
-            con.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        asesora(asesor);
-        soporta(asesor);
-    }
-    
-    private void asesora(AsesorDTO asesor){
-        try {
-            Connection con = DriverManager.getConnection(dbFullURL, dbUser, dbPswd);
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT a.id "
-                                            + "FROM asesor a"
-                                            + "WHERE a.nombre = "+asesor.getUsuario()+";");
-            int idAsesor = rs.getInt("id");
-            for(AsesorDTO.Asesora asesora : asesor.getAsesora()){
-                stmt.executeUpdate("INSERT INTO `asesora`(`idEmpresa`, `idAsesor`, `fechaDeEntrada`) "
-                    + "VALUES ('"+asesora.getEmpresa().getId()+"','"+idAsesor+"','"+asesora.getFechaEntrada()+"')");
-            }
-            stmt.close();
-            con.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    private void soporta(AsesorDTO asesor){
-        try {
-            Connection con = DriverManager.getConnection(dbFullURL, dbUser, dbPswd);
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT a.id "
-                                            + "FROM asesor a"
-                                            + "WHERE a.nombre = "+asesor.getUsuario()+";");
-            int idAsesor = rs.getInt("id");
-            for(AreaDTO area : asesor.getAreas()){
-                stmt.executeUpdate("INSERT INTO `soporta`(`idAsesor`, `idArea`) "
-                    + "VALUES ('"+idAsesor+"','"+area.getId()+"')");
-            }
-            stmt.close();
-            con.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
     }
 }

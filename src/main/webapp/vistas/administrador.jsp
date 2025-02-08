@@ -10,7 +10,6 @@
         <h1>
             Bienvenido administrador ${usuario.getUsuario()}
         </h1>
-        
-        
+             
     </body>
 </html>

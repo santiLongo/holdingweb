@@ -8,6 +8,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
@@ -15,95 +18,48 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class PaisDAO {
     
-    private final String dbFullURL; 
-    private final String dbUser; 
-    private final String dbPswd;
+    private final String hibernateDir;
     
     @Autowired 
-    public PaisDAO( 
-            @Qualifier("dbName") String dbName, 
-            @Qualifier("dbURL")  String dbURL, 
-            @Qualifier("dbUser") String dbUser, 
-            @Qualifier("dbPswd") String dbPswd) { 
-        dbFullURL = "jdbc:mysql://" + dbURL + "/" + dbName; 
-        this.dbUser = dbUser; 
-        this.dbPswd = dbPswd; 
+    public PaisDAO(
+            @Qualifier("hibernateDir") String hibernateDir) {
+        this.hibernateDir = hibernateDir;
     }
     
-    public PaisDTO cargarPais(Long codigo){
+    public PaisDTO cargarPais(Long id){
         PaisDTO pais = new PaisDTO();
+        SessionFactory sessionFactory = new Configuration()
+        .configure(hibernateDir)  
+        .buildSessionFactory();
+        Session session = sessionFactory.openSession();
+
         try {
-            Connection con = DriverManager.getConnection(dbFullURL, dbUser, dbPswd);
-            Statement stmt = con.createStatement(); 
-            stmt.execute("SELECT * FROM pais WHERE id = " + codigo + ""); 
-            ResultSet rs = stmt.getResultSet(); 
-            rs.next();
-            pais.setNombre(rs.getString("nombre"));
-            pais.setCapital(rs.getString("capital"));
-            pais.setCantidadHabitantes(rs.getInt("cantHabitantes"));
-            pais.setPbi(rs.getInt("pbi"));
-            stmt.close();
-            con.close();
-            rs.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+            session.beginTransaction();
+            pais = session.find(PaisDTO.class, id);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
         }
+        
         return pais;
     }
     
-    public ArrayList<PaisDTO> cargarListaPaises(Long codigoEmpresa){
-        ArrayList<PaisDTO> paises = new ArrayList<>();
-        try {
-            Connection con = DriverManager.getConnection(dbFullURL, dbUser, dbPswd);
-            Statement stmt = con.createStatement(); 
-            stmt.execute("SELECT p.id "
-                    + "FROM pais p "
-                    + "WHERE p.id IN (SELECT act.idPais "
-                    + "FROM actua act "
-                    + "WHERE act.idEmpresa = " +codigoEmpresa+ ");"); 
-            ResultSet rs = stmt.getResultSet(); 
-            while(rs.next()){
-                paises.add(cargarPais(rs.getLong(1)));
-            }
-            stmt.close();
-            con.close();
-            rs.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return paises;
-    }
-    
-    public ArrayList<PaisDTO> traerPaises(){
-        ArrayList<PaisDTO> paises = new ArrayList<>();
-        try {
-            Connection con = DriverManager.getConnection(dbFullURL, dbUser, dbPswd);
-            Statement stmt = con.createStatement(); 
-            stmt.execute("SELECT p.id"
-                    + "FROM pais p"); 
-            ResultSet rs = stmt.getResultSet(); 
-            while(rs.next()){
-                paises.add(cargarPais(rs.getLong(1)));
-            }
-            stmt.close();
-            con.close();
-            rs.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return paises;
-    }
-    
     public void altaPais(PaisDTO pais){
+        SessionFactory sessionFactory = new Configuration()
+        .configure(hibernateDir)  
+        .buildSessionFactory();
+        Session session = sessionFactory.openSession();
+
         try {
-            Connection con = DriverManager.getConnection(dbFullURL, dbUser, dbPswd);
-            Statement stmt = con.createStatement(); 
-            stmt.executeUpdate("INSERT INTO `pais`(`nombre`, `capital`, `cantHabitantes`, `pbi`) "
-                    + "VALUES ('"+pais.getNombre()+"','"+pais.getCapital()+"','"+pais.getCantidadHabitantes()+"','"+pais.getPbi()+"')");
-            stmt.close();
-            con.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+            session.beginTransaction();
+            session.save(pais);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
         }
     }
 }

@@ -57,52 +57,6 @@ public class AreaDAO {
         return area;
     }
     
-    public ArrayList<AreaDTO> cargarAreasSoporta(Long idAsesor){
-        ArrayList<AreaDTO> areas = new ArrayList<>();
-        try {
-            Connection con = DriverManager.getConnection(dbFullURL, dbUser, dbPswd);
-            Statement stmt = con.createStatement(); 
-            stmt.execute("SELECT a.id "
-                    + "FROM area a "
-                    + "WHERE a.id IN (SELECT s.idArea "
-                    + "FROM soporta s "
-                    + "WHERE s.idAsesor = " +idAsesor+ ");"); 
-            ResultSet rs = stmt.getResultSet(); 
-            while(rs.next()){
-                areas.add(cargarArea(rs.getInt(1)));
-            }
-            stmt.close();
-            con.close();
-            rs.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return areas;
-    }
-    
-    public ArrayList<AreaDTO> cargarAreasCubre(Long codigoEmpresa){
-        ArrayList<AreaDTO> areas = new ArrayList<>();
-        try {
-            Connection con = DriverManager.getConnection(dbFullURL, dbUser, dbPswd);
-            Statement stmt = con.createStatement(); 
-            stmt.execute("SELECT a.id "
-                    + "FROM area a "
-                    + "WHERE a.id IN (SELECT c.idArea "
-                    + "FROM cubre c "
-                    + "WHERE c.idEmpresa = " +codigoEmpresa+ ");"); 
-            ResultSet rs = stmt.getResultSet(); 
-            while(rs.next()){
-                areas.add(cargarArea(rs.getInt(1)));
-            }
-            stmt.close();
-            con.close();
-            rs.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return areas;
-    }
-    
     public void altaArea(AreaDTO area){
         try {
             Connection con = DriverManager.getConnection(dbFullURL, dbUser, dbPswd);
@@ -114,26 +68,6 @@ public class AreaDAO {
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-    
-    public ArrayList<AreaDTO> traerAreas(){
-        ArrayList<AreaDTO> areas = new ArrayList<>();
-        try {
-            Connection con = DriverManager.getConnection(dbFullURL, dbUser, dbPswd);
-            Statement stmt = con.createStatement(); 
-            stmt.execute("SELECT a.id "
-                    + "FROM area a;"); 
-            ResultSet rs = stmt.getResultSet(); 
-            while(rs.next()){
-                areas.add(cargarArea(rs.getInt(1)));
-            }
-            stmt.close();
-            con.close();
-            rs.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return areas;
     }
     
 }

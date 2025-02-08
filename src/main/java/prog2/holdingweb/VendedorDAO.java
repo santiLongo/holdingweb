@@ -49,12 +49,6 @@ public class VendedorDAO {
         return vendedor;
     }
     
-    public int cantidadVendedores(Long codigoEmpresa){
-        int cantidadVendedores = 0;
-        
-        return cantidadVendedores;
-    }
-    
     public void altaVendedor(VendedorDTO vendedor){
         
     }

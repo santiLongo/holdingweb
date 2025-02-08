@@ -14,6 +14,8 @@ public class Controlador {
     private UsuarioDAO usuarioDAO;
     @Autowired
     private AdministradorDAO adminDAO;
+    @Autowired
+    private PaisDAO paisDAO;
 
     @GetMapping("/")
     public String mostrarInicio() {
@@ -36,8 +38,7 @@ public class Controlador {
             @RequestParam(value = "usuario", required = true) String usuario,
             @RequestParam(value = "contrasenia", required = true) String contrasenia) {
         String tipoUser = usuarioDAO.cargarUsuario(usuario, contrasenia);
-        model.addAttribute("usuario", usuarioDAO.getUsuario()); 
-        
+        model.addAttribute("usuario", usuarioDAO.getUsuario());
         if(tipoUser.equals("")){
             return "errorUsuario";
         }
