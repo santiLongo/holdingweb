@@ -4,20 +4,25 @@
 <html> 
   <head> 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
-    <link rel="stylesheet" type="text/css" href="/resources/css/estilo.css"> 
+    <link rel="stylesheet" type="text/css" href="/resources/css/style.css"> 
     <title>HOLDING WEB</title> 
   </head> 
-  <body> 
-    <h1>
-        HOLDING INSPT
-    </h1>
-    <form method="post" action="/inicio"> 
-      <h2>Ingrese su usuario</h2>
-      <input type="text" id="usuario" name="usuario">
-      <h2>Ingrese su contrasenia</h2>
-      <input type="text" id="contrasenia" name="contrasenia"> <br><br>
-      <input type="submit" value="Acceder">
-    </form>
-    
-  </body> 
+   <body>
+        
+        <div class="contenedor">
+            <h2>Holdig Web</h2>
+            <form method="post" action="/inicio"> 
+                <div class="form-group">
+                    <label class="datos" for="text"> Usuario:</label>
+                    <input type="text" id="usuario" name="usuario" placeholder="Ingrese un usuario...">
+                </div>
+                <div class="form-group">
+                    <label for="text"> Contrasenia:</label>
+                    <input class="datos" type="text" id="contrasenia" name="contrasenia" placeholder="Ingrese una contraseña..."> <br><br>
+                </div>
+                <input class="acceder" type="submit" value="Acceder">
+                </form>
+        
+        </div>
+    </body> 
 </html> 

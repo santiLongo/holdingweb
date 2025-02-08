@@ -40,7 +40,7 @@ public class AppConfig implements WebMvcConfigurer {
     public String getDBURL() { return "127.0.0.1"; } 
  
     @Bean(name = "dbUser") 
-    public String getDBUser() { return "cualquiera"; } 
+    public String getDBUser() { return ""; } 
  
     @Bean(name = "dbPswd") 
     public String getDBPswd() { return ""; } 

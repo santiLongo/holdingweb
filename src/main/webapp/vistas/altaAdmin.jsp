@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" type="text/css" href="/resources/css/estilo.css">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Dar de alta administrador</title>
     </head>
