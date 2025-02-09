@@ -4,79 +4,58 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="/resources/css/estilo.css">
+        <link rel="stylesheet" type="text/css" href="/resources/css/stylos.css">
         <title>Vendedor Holding</title>
     </head>
     <body>
-        <div id="container">
-            <header>
-                <h1>
-                    Bienvenido ${usuario.nombre}
-                </h1>
-            </header>
-            
-                
-            <section id="contenido">
+
+        <div class="contenedor">
+
+            <div class="form-group">
+                <h2>Bienvenido Vendedor ${usuario.nombre}</h2>
+            </div>
+
+            <div class="form-group">
+
                 <article id="artCodigo">
-                    <h2>
-                        Su codigo de vendedor es:
-                    </h2>
-                    <p>
-                        ${usuario.id}
-                    </p>
+                    <label for="">Su codigo de vendedor es: </label>
+                    <span> ${usuario.id} </span>
                 </article>
+
                 <article id="artDireccion">
-                <h2>
-                    Su direccion es: 
-                </h2>
-                <p>
-                     ${usuario.direccion}
-                </p>
+                    <label for="">Su direccion es: </label>
+                    <span> ${usuario.direccion} </span>
                 </article>
+
                 <article id="artFecha">
-                    <h2>
-                        Inicio actividades la fecha: 
-                    </h2>
-                    <p>
-                        ${usuario.fechaDeEntrada}
-                    </p>
+                    <label for="">Inicio actividades la fecha: </label>
+                    <span> ${usuario.fechaDeEntrada} </span>
                 </article>
+
                 <article id="artEmpresa">
-                <h2>
-                    Trabaja para la empresa: 
-                </h2>
-                <p>
-                    ${usuario.empresa.nombre}
-                </p>
+                    <label for=""> Trabaja para la empresa: </label>
+                    <span>${usuario.empresa.nombre}</span>
                 </article>
+
                 <article id="artLider">
                     <c:choose>
                         <c:when test = "${usuario.lider.id == 0}">
-                            <h2>
-                                No tiene lider.
-                            </h2>
+                            <label for="">No tiene lider.</label>
                         </c:when>
                         <c:otherwise>
-                            <h2>
-                                Su lider es:
-                            </h2>
-                            <p>
-                                ${usuario.lider.nombre}
-                            </p>
+                            <label for="">Su lider es:</label>
+                            <span>${usuario.lider.nombre}</span>
                         </c:otherwise>
                     </c:choose>
                 </article>
+
                 <article id="artReclutas">
                     <c:choose>
                         <c:when test = "${empty usuario.reclutas}">
-                            <h2>
-                                No tiene reclutas.
-                            </h2>
+                            <label for="">No tiene reclutas.</label>
                         </c:when>
                         <c:otherwise>
-                            <h2>
-                                Sus reclutas son:
-                            </h2>
+                            <label for="">Sus reclutas son:</label>
                             <c:forEach var="recluta" items="${usuario.reclutas}">
                                 <p>
                                     ${recluta.nombre}
@@ -85,10 +64,11 @@
                         </c:otherwise>
                     </c:choose>
                 </article>
-            </section>
-            <form method="get" action="/"> 
-                <input type="submit" value="Cerrar Sesion">
-            </form>
+
+                <form method="get" action="/"> 
+                    <input class="btn" type="submit" value="Cerrar Sesion">
+                </form>
+            </div>
         </div>
     </body>
 </html>
