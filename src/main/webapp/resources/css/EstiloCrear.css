@@ -1,0 +1,96 @@
+body {
+    display:flex;
+    justify-content: center;
+    height: 100vh;
+    background-size: cover;
+    background-image: linear-gradient(#581845,#ff4890);
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+}
+
+.contenedor{
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 25px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.3);
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 700px;
+}
+
+.cabecera{
+
+    background: rgba(255, 255, 255, 0.272);
+    color: white;
+    padding: 25px;
+    border-radius: 15px;
+}
+
+.contenido{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    color: white;
+    padding: 25px;
+}
+
+.input_group{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.input_group label {
+    min-width: 120px;
+    text-align: center; 
+    font-weight: bold;
+    color: white;
+}
+
+.barra_texto{
+    display: flex;
+    text-decoration: none;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.3);
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 8px;
+    padding: 8px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    width: 95%;
+}
+
+.barra_texto.grande{
+    height: 100px;  
+    max-width: 100%; 
+    resize: vertical;
+    
+}
+
+.boton{
+    gap: 10px;
+    width: 230px;
+    text-decoration: none;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.3);
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 8px;
+}
+
+.boton:hover{
+    background: rgba(255, 255, 255, 0.5);
+    color: #3b024a;
+    transform: scale(1.05);
+}
