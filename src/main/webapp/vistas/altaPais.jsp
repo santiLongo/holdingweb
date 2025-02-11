@@ -53,16 +53,13 @@
 
     </div>
 
+    
+    
     <div>
-
-        <form method="get" action="#">
-
-            <input class="boton" type="submit" value="Cancelar y Cerrar">
+       <input class="boton" type="button" onclick="window.history.back();" value="Cancelar y Cerrar">
+        <form method="post" action="/inicio/pais">
             <input class="boton" type="button"  type="submit" value="Aceptar y Crear">
-
         </form>
-      
-   
     </div>
 
 

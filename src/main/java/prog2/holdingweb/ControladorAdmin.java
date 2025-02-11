@@ -24,7 +24,7 @@ public class ControladorAdmin{
     @Autowired
     private AreaDAO areaDAO;
     
-    @GetMapping("/inicio/pais")
+    @GetMapping("/inicio/agregarPais")
     public String crearPais(){
         return "altaPais";
     }
