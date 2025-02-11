@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.hibernate.Session;
@@ -44,6 +45,26 @@ public class PaisDAO {
         }
         
         return pais;
+    }
+    
+    public List<PaisDTO> traerPaises(){
+        List<PaisDTO> paises = null;
+        SessionFactory sessionFactory = new Configuration()
+        .configure(hibernateDir)  
+        .buildSessionFactory();
+        Session session = sessionFactory.openSession();
+
+        try {
+            session.beginTransaction();
+            paises = session.createQuery("FROM PaisDTO", PaisDTO.class).list();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        
+        return paises;
     }
     
     public void altaPais(PaisDTO pais){

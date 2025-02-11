@@ -1,14 +1,6 @@
-
 package prog2.holdingweb;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -21,9 +13,6 @@ import org.springframework.stereotype.Repository;
 public class EmpresaDAO {
     
     private final String hibernateDir;
-    private final String dbFullURL; 
-    private final String dbUser; 
-    private final String dbPswd;
     @Autowired
     private PaisDAO paisDAO;
     @Autowired
@@ -32,15 +21,8 @@ public class EmpresaDAO {
     private AreaDAO areaDAO;
     
     @Autowired 
-    public EmpresaDAO( 
-            @Qualifier("dbName") String dbName, 
-            @Qualifier("dbURL")  String dbURL, 
-            @Qualifier("dbUser") String dbUser, 
-            @Qualifier("dbPswd") String dbPswd,
-            @Qualifier("hibernateDir") String hibernateDir) { 
-        dbFullURL = "jdbc:mysql://" + dbURL + "/" + dbName; 
-        this.dbUser = dbUser; 
-        this.dbPswd = dbPswd;
+    public EmpresaDAO(
+            @Qualifier("hibernateDir") String hibernateDir) {
         this.hibernateDir = hibernateDir;
     }
     
@@ -63,7 +45,40 @@ public class EmpresaDAO {
         return empresa;
     }
     
-    public void altaEmpresa(EmpresaDTO empresa){
+    public List<EmpresaDTO> traerEmpresas(){
+        List<EmpresaDTO> empresas = null;
+        SessionFactory sessionFactory = new Configuration()
+        .configure(hibernateDir)  
+        .buildSessionFactory();
+        Session session = sessionFactory.openSession();
+
+        try {
+            session.beginTransaction();
+            empresas = session.createQuery("FROM EmpresaDTO", EmpresaDTO.class).list();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
         
+        return empresas;
+    }
+    
+    public void altaEmpresa(EmpresaDTO empresa){
+        SessionFactory sessionFactory = new Configuration()
+        .configure(hibernateDir)  
+        .buildSessionFactory();
+        Session session = sessionFactory.openSession();
+
+        try {
+            session.beginTransaction();
+            session.save(empresa);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
     }
 }

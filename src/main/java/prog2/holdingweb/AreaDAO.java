@@ -1,17 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package prog2.holdingweb;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import java.util.List;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
@@ -21,52 +14,68 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class AreaDAO {
     
-    private final String dbFullURL; 
-    private final String dbUser; 
-    private final String dbPswd;
+    private final String hibernateDir;
     
     @Autowired 
-    public AreaDAO( 
-            @Qualifier("dbName") String dbName, 
-            @Qualifier("dbURL")  String dbURL, 
-            @Qualifier("dbUser") String dbUser, 
-            @Qualifier("dbPswd") String dbPswd) { 
-        dbFullURL = "jdbc:mysql://" + dbURL + "/" + dbName; 
-        this.dbUser = dbUser; 
-        this.dbPswd = dbPswd; 
+    public AreaDAO(
+            @Qualifier("hibernateDir") String hibernateDir) {
+        this.hibernateDir = hibernateDir;
     }
     
-    private AreaDTO cargarArea(int codigo){
+    private AreaDTO cargarArea(Long id){
         AreaDTO area = new AreaDTO();
+        SessionFactory sessionFactory = new Configuration()
+        .configure(hibernateDir)  
+        .buildSessionFactory();
+        Session session = sessionFactory.openSession();
+
         try {
-            Connection con = DriverManager.getConnection(dbFullURL, dbUser, dbPswd);
-            Statement stmt = con.createStatement(); 
-            stmt.execute("SELECT * "
-                    + "FROM area a "
-                    + "WHERE a.id = " +codigo+ ");"); 
-            ResultSet rs = stmt.getResultSet(); 
-            rs.next();
-            area.setNombre(rs.getString("nombre"));
-            area.setDescripcion(rs.getString("descripcion"));
-            stmt.close();
-            con.close();
-            rs.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+            session.beginTransaction();
+            area = session.find(AreaDTO.class, id);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
         }
+        
         return area;
     }
     
-    public void altaArea(AreaDTO area){
+    public List<AreaDTO> traerAreas(){
+        List<AreaDTO> areas = null;
+        SessionFactory sessionFactory = new Configuration()
+        .configure(hibernateDir)  
+        .buildSessionFactory();
+        Session session = sessionFactory.openSession();
+
         try {
-            Connection con = DriverManager.getConnection(dbFullURL, dbUser, dbPswd);
-            Statement stmt = con.createStatement(); 
-            stmt.executeUpdate("INSERT INTO `area`(`nombre`, `descripcion`) "
-                    + "VALUES ('"+area.getNombre()+"','"+area.getDescripcion()+"')");
-            stmt.close();
-            con.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+            session.beginTransaction();
+            areas = session.createQuery("FROM AreaDTO", AreaDTO.class).list();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        
+        return areas;
+    }
+    
+    public void altaArea(AreaDTO area){
+        SessionFactory sessionFactory = new Configuration()
+        .configure(hibernateDir)  
+        .buildSessionFactory();
+        Session session = sessionFactory.openSession();
+
+        try {
+            session.beginTransaction();
+            session.save(area);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
         }
     }
     

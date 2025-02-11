@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.hibernate.Query;
@@ -49,7 +50,40 @@ public class VendedorDAO {
         return vendedor;
     }
     
-    public void altaVendedor(VendedorDTO vendedor){
+    public List<VendedorDTO> traerVendedores(){
+        List<VendedorDTO> vendedores = null;
+        SessionFactory sessionFactory = new Configuration()
+        .configure(hibernateDir)  
+        .buildSessionFactory();
+        Session session = sessionFactory.openSession();
+
+        try {
+            session.beginTransaction();
+            vendedores = session.createQuery("FROM VendedorDTO", VendedorDTO.class).list();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
         
+        return vendedores;
+    }
+    
+    public void altaVendedor(VendedorDTO vendedor){
+        SessionFactory sessionFactory = new Configuration()
+        .configure(hibernateDir)  
+        .buildSessionFactory();
+        Session session = sessionFactory.openSession();
+
+        try {
+            session.beginTransaction();
+            session.save(vendedor);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
     }
 }

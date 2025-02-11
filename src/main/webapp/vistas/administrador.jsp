@@ -12,23 +12,23 @@
         <div class="contenedor">
             <h2>Bienvenido Administrador ${usuario.getUsuario()}</h2>
             <div class = "options">
-                <form action="get" action="/agregarVendedor">
+                <form method="get" action="/agregarVendedor">
                     <input type="submit" value="Agregar Vendedor">
                 </form>
 
-                <form action="get" action="/agregarAsesir">
+                <form method="get" action="/agregarAsesir">
                     <input class="acceder" type="submit" value="Agregar Asesor">
                 </form>
 
-                <form action="get" action="/agregarEmpresa">
+                <form method="get" action="/agregarEmpresa">
                     <input class="acceder" type="submit" value="Agregar Empresa">
                 </form>
 
-                <form action="get" action="/agregarPais">
+                <form method="get" action="/agregarPais">
                     <input class="acceder" type="submit" value="Agregar Pais">
                 </form>
 
-                <form action="post" action="/">
+                <form method="get" action="/">
                     <input class="acceder" type="submit" value="Salir">
                 </form>
                 
