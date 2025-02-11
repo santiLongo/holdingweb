@@ -4,18 +4,34 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="/resources/css/sstyle.css"> 
+        <link rel="stylesheet" type="text/css" href="/resources/css/style.css"> 
         <title>Administrador Holding</title>
     </head>
     <body>
+
         <div class="contenedor">
             <h2>Bienvenido Administrador ${usuario.getUsuario()}</h2>
             <div class = "options">
-                <a href="#"> Agregar Vendedor</a>
-                <a href="#"> Agregar Asesor</a>
-                <a href="#"> Agregar Empresa</a>
-                <a href="#"> Agregar Pais</a>
-                <a href="#"> Salir</a>
+                <form action="get" action="/agregarVendedor">
+                    <input type="submit" value="Agregar Vendedor">
+                </form>
+
+                <form action="get" action="/agregarAsesir">
+                    <input class="acceder" type="submit" value="Agregar Asesor">
+                </form>
+
+                <form action="get" action="/agregarEmpresa">
+                    <input class="acceder" type="submit" value="Agregar Empresa">
+                </form>
+
+                <form action="get" action="/agregarPais">
+                    <input class="acceder" type="submit" value="Agregar Pais">
+                </form>
+
+                <form action="post" action="/">
+                    <input class="acceder" type="submit" value="Salir">
+                </form>
+                
             </div>
         </div>
         
