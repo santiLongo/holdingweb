@@ -20,7 +20,7 @@
                     <input class="acceder" type="submit" value="Agregar Asesor">
                 </form>
 
-                <form method="get" action="/agregarEmpresa">
+                <form method="get" action="/inicio/altaEmpresa">
                     <input class="acceder" type="submit" value="Agregar Empresa">
                 </form>
 

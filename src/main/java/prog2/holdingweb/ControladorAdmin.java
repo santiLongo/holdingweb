@@ -58,14 +58,18 @@ public class ControladorAdmin{
         return "area";
     }
     
-    @GetMapping("/inicio/empresa")
+    @GetMapping("/inicio/altaEmpresa")
     public String crearEmpresa(Model model){
         model.addAttribute("paises", paisDAO.traerPaises());
         model.addAttribute("areas", areaDAO.traerAreas());
+        
+        for(PaisDTO pais : paisDAO.traerPaises()){
+            System.out.println("Nombre pais: " + pais.getNombre());
+        }
         return "altaEmpresa";
     }
     
-    @PostMapping("/inicio/empresa")
+    @PostMapping("/inicio/altaEmpresa")
     public String altaEmpresa(Model model,
             @RequestParam(value = "nombre", required = true) String nombre,
             @RequestParam(value = "facturacion", required = true) int facturacion,
@@ -75,8 +79,8 @@ public class ControladorAdmin{
         
         EmpresaDTO empresa = new EmpresaDTO(nombre,facturacion,areas,paises,sedeCentral);
         empresaDAO.altaEmpresa(empresa);
-        model.addAttribute("empresa", empresa);
-        return "empresa";
+        
+        return "index";
     }
     
     @GetMapping("/inicio/asesor")

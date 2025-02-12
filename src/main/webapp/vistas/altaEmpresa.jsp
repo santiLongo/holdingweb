@@ -3,13 +3,13 @@
     Created on : 11 feb. 2025, 21:30:48
     Author     : Rocco
 --%>
-
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="/resources/css/EstiloCrear"> 
+        <link rel="stylesheet" type="text/css" href="/resources/css/EstiloCrear.css"> 
         <title>Alta Empresa</title>
     </head>
     <body>
@@ -45,8 +45,8 @@
                 <label for="areas"> Areas: </label>
 
                 <select class="selArea" name="areas" multiple>
-                    <c:forEach var="option" items="${comboBoxOptions}">
-                        <option value="${option}">${option}</option>
+                    <c:forEach var="area" items="${areas}">
+                        <option value="${area}">${area.nombre}</option>
                     </c:forEach>
                 </select>
 
@@ -59,8 +59,8 @@
                 <label for="paises"> Paises: </label>
 
                 <select  name="paises" multiple>
-                    <c:forEach var="option" items="${comboBoxOptions}">
-                        <option value="${option}">${option}</option>
+                    <c:forEach var="pais" items="${paises}">
+                        <option value="${pais}"> ${pais.getNombre()}</option>
                     </c:forEach>
                 </select>
 
@@ -73,8 +73,9 @@
                 <label for="sedeCentral"> Sede Central: </label>
 
                 <select  name="sedeCentral" size="1">
-                    <c:forEach var="option" items="${comboBoxOptions}">
-                        <option value="${option}"> Elegir pais sede... </option>
+                    
+                    <c:forEach var="pais" items="${paises}">
+                        <option value="${pais}"> ${pais.nombre} </option>
                     </c:forEach>
                 </select>
 
@@ -86,15 +87,11 @@
         </div>
 
         <div>
-
-            <form method="get" action="#">
-    
-                <input class="boton" type="submit" value="Cancelar y Cerrar">
-                <input class="boton" type="button"  type="submit" value="Aceptar y Crear">
-    
-            </form>
-          
+       <input class="boton" type="button" onclick="window.history.back();" value="Cancelar y Cerrar">
        
+        <form method="post" action="/inicio/altaEmpresa">
+            <input class="boton" type="submit" value="Aceptar y Crear">
+        </form>
         </div>
 
     </div>
