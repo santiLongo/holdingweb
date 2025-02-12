@@ -94,3 +94,46 @@ body {
     color: #3b024a;
     transform: scale(1.05);
 }
+
+input[type="date"] {
+    text-align: center;
+    text-decoration: none;
+    padding: 10px;
+    font-size: 16px;
+    background: rgba(255, 255, 255, 0.3);
+    color: gray;
+    border-radius: 8px;
+    width: 95%;
+}
+
+select{
+    text-align: center;
+    text-decoration: none;
+    padding: 10px;
+    font-size: 16px;
+    background: rgba(255, 255, 255, 0.3);
+    color: rgb(255, 255, 255);
+    border-radius: 8px;
+    width: 95%;
+}
+
+select[multiple]::-webkit-scrollbar {
+    width: 25px;
+}
+
+
+select[multiple]::-webkit-scrollbar-track {
+    background: #f8a1c4;
+    border-radius: 10px;
+}
+
+
+select[multiple]::-webkit-scrollbar-thumb {
+    background: #8b5e83;
+    border-radius: 10px;
+}
+
+
+select[multiple]::-webkit-scrollbar-thumb:hover {
+    background: #693a66;
+}
