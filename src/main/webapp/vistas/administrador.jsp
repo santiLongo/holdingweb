@@ -24,7 +24,7 @@
                     <input class="acceder" type="submit" value="Agregar Empresa">
                 </form>
 
-                <form method="get" action="/inicio/agregarPais">
+                <form method="get" action="/inicio/altaPais">
                     <input class="acceder" type="submit" value="Agregar Pais">
                 </form>
 

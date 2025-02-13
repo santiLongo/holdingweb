@@ -24,12 +24,12 @@ public class ControladorAdmin{
     @Autowired
     private AreaDAO areaDAO;
     
-    @GetMapping("/inicio/agregarPais")
+    @GetMapping("/inicio/altaPais")
     public String crearPais(){
         return "altaPais";
     }
     
-    @PostMapping("/inicio/pais")
+    @PostMapping("/inicio/altaPais")
     public String altaPais(Model model,
             @RequestParam(value = "nombre", required = true) String nombre,
             @RequestParam(value = "capital", required = true) String capital,
@@ -38,8 +38,7 @@ public class ControladorAdmin{
         
         PaisDTO pais = new PaisDTO(nombre,capital,pbi,cantidadHabitantes);
         paisDAO.altaPais(pais);
-        model.addAttribute("pais", pais);
-        return "pais";
+        return "administrador";
     }
     
     @GetMapping("/inicio/area")
