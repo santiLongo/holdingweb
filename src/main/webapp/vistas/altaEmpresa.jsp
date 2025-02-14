@@ -12,8 +12,8 @@
         <link rel="stylesheet" type="text/css" href="/resources/css/EstiloCrear.css"> 
         <title>Alta Empresa</title>
     </head>
-    <body>
     
+    <body>
     <div class="contenedor">
 
         <div class="cabecera">
@@ -38,44 +38,62 @@
     
             </div>
 
-           
+        </div>
 
-            <div class="input_group">
+        <div class="contenido">
+            <label for=""> Areas: </label>
+        </div>
+            
+        <div style="display: flex; gap: 10px;">
+            <select id="disponibles" multiple>
+                <option value="opcion1">Opción 1</option>
+                <option value="opcion2">Opción 2</option>
+                <option value="opcion3">Opción 3</option>
+                <option value="opcion4">Opción 4</option>
+            </select>
+            
+            <select id="seleccionadas" multiple></select>
+            
+        </div>
+        <div>
+            <button class="boton" onclick="mover('disponibles', 'seleccionadas')">→</button>
+            <input class="boton" type="submit" value="Crear Area">
+            <button class="boton" onclick="mover('seleccionadas', 'disponibles')">←</button>
+         </div>
 
-                <label for="areas"> Areas: </label>
+        <div class="contenido">
+            <label for=""> Paises: </label>
+        </div>
+        
 
-                <select class="selArea" name="areas" multiple>
-                    <c:forEach var="area" items="${areas}">
-                        <option value="${area}">${area.nombre}</option>
-                    </c:forEach>
-                </select>
+        <div style="display: flex; gap: 10px;">
+            <select id="PaisesDisponibles" multiple>
+                <option value="opcion1">Opción 1</option>
+                <option value="opcion2">Opción 2</option>
+                <option value="opcion3">Opción 3</option>
+                <option value="opcion4">Opción 4</option>
+            </select>
+            
+            <select id="PaisesSeleccionados" multiple></select>
+        </div>
 
-                <input class="boton" type="submit" value="Crear Area">
+        <div> 
+            <button class="boton" onclick="mover('PaisesDisponibles', 'PaisesSeleccionados')">→</button>
+            <input class="boton" type="submit" value="Crear Pais">
+            <button class="boton" onclick="mover('PaisesSeleccionados', 'PaisesDisponibles')">←</button>
+        </div>
 
-            </div>
 
-            <div class="input_group">
 
-                <label for="paises"> Paises: </label>
-
-                <select  name="paises" multiple>
-                    <c:forEach var="pais" items="${paises}">
-                        <option value="${pais}"> ${pais.getNombre()}</option>
-                    </c:forEach>
-                </select>
-
-                <input class="boton" type="submit" value="Crear Pais">
-
-            </div>
-           
+        <div class="contenido">
             <div class="input_group">
 
                 <label for="sedeCentral"> Sede Central: </label>
 
                 <select  name="sedeCentral" size="1">
-                    
-                    <c:forEach var="pais" items="${paises}">
-                        <option value="${pais}"> ${pais.nombre} </option>
+                    <option selected hidden> Elija una sede...</option>
+                    <c:forEach var="option" items="${comboBoxOptions}">
+                        <option value="${option}"> </option>
                     </c:forEach>
                 </select>
 
@@ -87,14 +105,35 @@
         </div>
 
         <div>
-       <input class="boton" type="button" onclick="window.history.back();" value="Cancelar y Cerrar">
+
+            <form method="get" action="#">
+    
+                <input class="boton" type="submit" value="Cancelar y Cerrar">
+                <input class="boton" type="button"  type="submit" value="Aceptar y Crear">
+    
+            </form>
+          
        
-        <form method="post" action="/inicio/altaEmpresa">
-            <input class="boton" type="submit" value="Aceptar y Crear">
-        </form>
         </div>
 
+  
+
+
     </div>
+
+    <script>
+        function mover(origen, destino) {
+            let selOrigen = document.getElementById(origen);
+            let selDestino = document.getElementById(destino);
+    
+            Array.from(selOrigen.selectedOptions).forEach(opcion => {
+                selDestino.appendChild(opcion);
+            });
+        }
+    </script>
+
+
+    
 
 </body>
 </html>

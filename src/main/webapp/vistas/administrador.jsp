@@ -13,7 +13,7 @@
             <h2>Bienvenido Administrador ${usuario.getUsuario()}</h2>
             <div class = "options">
                 <form method="get" action="/agregarVendedor">
-                    <input class="acceder" value="Agregar Vendedor">
+                    <input class="acceder" type="submit" value="Agregar Vendedor">
                 </form>
 
                 <form method="get" action="/agregarAsesor">
