@@ -16,12 +16,16 @@
                     <input class="acceder" value="Agregar Vendedor">
                 </form>
 
-                <form method="get" action="/agregarAsesir">
+                <form method="get" action="/agregarAsesor">
                     <input class="acceder" type="submit" value="Agregar Asesor">
                 </form>
 
                 <form method="get" action="/inicio/altaEmpresa">
                     <input class="acceder" type="submit" value="Agregar Empresa">
+                </form>
+                
+                <form method="get" action="/inicio/altaArea">
+                    <input class="acceder" type="submit" value="Agregar Area">
                 </form>
 
                 <form method="get" action="/inicio/altaPais">

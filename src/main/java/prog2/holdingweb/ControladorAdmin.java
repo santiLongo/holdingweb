@@ -41,20 +41,19 @@ public class ControladorAdmin{
         return "administrador";
     }
     
-    @GetMapping("/inicio/area")
+    @GetMapping("/inicio/altaArea")
     public String crearArea(){
         return "altaArea";
     }
     
-    @PostMapping("/inicio/area")
+    @PostMapping("/inicio/altaArea")
     public String altaArea(Model model,
             @RequestParam(value = "nombre", required = true) String nombre,
             @RequestParam(value = "descripcion", required = true) String descripcion){
         
         AreaDTO area = new AreaDTO(nombre,descripcion);
         areaDAO.altaArea(area);
-        model.addAttribute("area", area);
-        return "area";
+        return "administrador";
     }
     
     @GetMapping("/inicio/altaEmpresa")
