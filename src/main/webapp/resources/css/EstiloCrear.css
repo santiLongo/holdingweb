@@ -156,3 +156,10 @@ select[multiple]::-webkit-scrollbar-thumb {
 select[multiple]::-webkit-scrollbar-thumb:hover {
     background: #693a66;
 }
+
+.muestra{
+    background: rgba(255, 255, 255, 0.272);
+    color: white;
+    padding: 25px;
+    border-radius: 15px;
+}

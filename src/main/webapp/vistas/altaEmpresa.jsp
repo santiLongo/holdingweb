@@ -21,20 +21,20 @@
             <h2>Crear Empresa</h2>
 
         </div>
-
+         <form method="post" action="/inicio/altaEmpresa">
         <div class="contenido">
 
             <div class="input_group">
 
                 <label for="nombre"> Razon Social: </label>
-                <input class="barra_texto" type="text" id="nombre"  placeholder="Ingrese la razon social de la empresa...">
+                <input class="barra_texto" type="text" id="nombre" name="nombre"  placeholder="Ingrese la razon social de la empresa...">
     
             </div>
 
             <div class="input_group">
 
                 <label for="facturacion"> Facturación: </label>
-                <input class="barra_texto" type="text" id="facturacion"  placeholder="Ingrese la facturación anual de la empresa...">
+                <input class="barra_texto" type="text" id="facturacion" name="facturacion"  placeholder="Ingrese la facturación anual de la empresa...">
     
             </div>
 
@@ -46,19 +46,18 @@
             
         <div style="display: flex; gap: 10px;">
             <select id="disponibles" multiple>
-                <option value="opcion1">Opción 1</option>
-                <option value="opcion2">Opción 2</option>
-                <option value="opcion3">Opción 3</option>
-                <option value="opcion4">Opción 4</option>
+                <c:forEach var="area" items="${areas}">
+                    <option value="${area}">${area.nombre}</option>
+                </c:forEach>
             </select>
             
-            <select id="seleccionadas" multiple></select>
+            <select id="seleccionadas" name="areas" multiple></select>
             
         </div>
         <div>
-            <button class="boton" onclick="mover('disponibles', 'seleccionadas')">→</button>
+            <button class="boton" type="button" onclick="mover('disponibles', 'seleccionadas')">→</button>
             <input class="boton" type="submit" value="Crear Area">
-            <button class="boton" onclick="mover('seleccionadas', 'disponibles')">←</button>
+            <button class="boton" type="button" onclick="mover('seleccionadas', 'disponibles')">←</button>
          </div>
 
         <div class="contenido">
@@ -68,19 +67,18 @@
 
         <div style="display: flex; gap: 10px;">
             <select id="PaisesDisponibles" multiple>
-                <option value="opcion1">Opción 1</option>
-                <option value="opcion2">Opción 2</option>
-                <option value="opcion3">Opción 3</option>
-                <option value="opcion4">Opción 4</option>
+                <c:forEach var="pais" items="${paises}">
+                    <option value="${pais}"> ${pais.nombre} </option>
+                </c:forEach>
             </select>
             
-            <select id="PaisesSeleccionados" multiple></select>
+            <select id="PaisesSeleccionados" name="paises" multiple></select>
         </div>
 
         <div> 
-            <button class="boton" onclick="mover('PaisesDisponibles', 'PaisesSeleccionados')">→</button>
+            <button class="boton" type="button" onclick="mover('PaisesDisponibles', 'PaisesSeleccionados')">→</button>
             <input class="boton" type="submit" value="Crear Pais">
-            <button class="boton" onclick="mover('PaisesSeleccionados', 'PaisesDisponibles')">←</button>
+            <button class="boton" type="button" onclick="mover('PaisesSeleccionados', 'PaisesDisponibles')">←</button>
         </div>
 
 
@@ -92,8 +90,8 @@
 
                 <select  name="sedeCentral" size="1">
                     <option selected hidden> Elija una sede...</option>
-                    <c:forEach var="option" items="${comboBoxOptions}">
-                        <option value="${option}"> </option>
+                    <c:forEach var="pais" items="${paises}">
+                        <option value="${pais}"> ${pais.capital} </option>
                     </c:forEach>
                 </select>
 
@@ -106,17 +104,14 @@
 
         <div>
 
-            <form method="get" action="#">
+
+            <input class="boton" type="submit" value="Cancelar y Cerrar">
+            <input class="boton" type="submit"  type="submit" value="Aceptar y Crear">
     
-                <input class="boton" type="submit" value="Cancelar y Cerrar">
-                <input class="boton" type="button"  type="submit" value="Aceptar y Crear">
-    
-            </form>
-          
        
         </div>
 
-  
+         </form>
 
 
     </div>

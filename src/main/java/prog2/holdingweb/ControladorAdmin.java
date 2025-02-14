@@ -24,6 +24,19 @@ public class ControladorAdmin{
     @Autowired
     private AreaDAO areaDAO;
     
+    
+    @GetMapping("/inicio/altaAsesor")
+    public String crearAsesor(){
+        return "altaAsesor";
+    }
+    
+    
+    @GetMapping("/inicio/altaVendedor")
+    public String crearVendedor(){
+        return "altaVendedor";
+    }
+    
+    
     @GetMapping("/inicio/altaPais")
     public String crearPais(){
         return "altaPais";

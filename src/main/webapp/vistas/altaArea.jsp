@@ -25,7 +25,7 @@
                 </div>
                 <div class="input_group">
                     <label for="descripcion"> Descripción: </label>
-                    <input class="barra_texto grande" type="text" id="descripcion" name="descripcion" placeholder=" Ingrese una descripción del area....">
+                    <textarea class="barra_texto grande" id="descripcion" name="descripcion" placeholder="Ingrese una descripción del área..."></textarea>
                 </div>
             </div>
             <div>

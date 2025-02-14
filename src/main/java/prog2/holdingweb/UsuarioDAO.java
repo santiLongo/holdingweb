@@ -44,7 +44,6 @@ public class UsuarioDAO {
             query.setParameter("cont", cont);
 
             UsuarioDTO usuarioDTO = query.uniqueResult();
-
             if (usuarioDTO != null) {
                 switch (usuarioDTO.getTipo()) {
                     case "ADMIN":

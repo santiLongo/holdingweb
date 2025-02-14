@@ -18,7 +18,7 @@
                 </div>
                 <div class="form-group">
                     <label for="text"> Contrasenia:</label>
-                    <input class="datos" type="text" id="contrasenia" name="contrasenia" placeholder="Ingrese una contraseña..."> <br><br>
+                    <input class="datos" type="password" id="contrasenia" name="contrasenia" placeholder="Ingrese una contraseña..."> <br><br>
                 </div>
                 <input class="acceder" type="submit" value="Acceder">
                 </form>
