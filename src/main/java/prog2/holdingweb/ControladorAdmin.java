@@ -101,25 +101,13 @@ public class ControladorAdmin{
         List<AreaDTO> areas = areaDAO.cargarAreas(areasId);
         
         AsesorDTO asesor = new AsesorDTO(usuario, contrasenia, nombre, direccion, areas, asesora);
-        System.out.println(asesor.getUsuario());
-        System.out.println(asesor.getContrasenia());
-        System.out.println(asesor.getNombre());
-        System.out.println(asesor.getDireccion());
-        System.out.println("Areas");
-        for(AreaDTO area: asesor.getAreas()){
-            System.out.println(area.getNombre());
-        }
-        System.out.println("Empresas");
-        for(AsesorDTO.Asesora area: asesor.getAsesora()){
-            System.out.println(area.getEmpresa().getNombre());
-        }
         asesorDAO.altaAsesor(asesor);
        
         return "administrador";
     }
     
     @GetMapping("/inicio/altaVendedor")
-    public String crearVendedor(Model model){
+    public String altaVendedor(Model model){
         model.addAttribute("empresas", empresaDAO.traerEmpresas());
         model.addAttribute("vendedores", vendedorDAO.traerVendedores());
         return "altaVendedor";
@@ -131,16 +119,24 @@ public class ControladorAdmin{
             @RequestParam(value = "contrasenia", required = true) String contrasenia,
             @RequestParam(value = "nombre", required = true) String nombre,
             @RequestParam(value = "direccion", required = true) String direccion,
-            @RequestParam(value = "lider", required = true) VendedorDTO lider,
-            @RequestParam(value = "empresa", required = true) EmpresaDTO empresa){
+            @RequestParam(value = "lider", required = false) Long liderId,
+            @RequestParam(value = "empresa", required = false) Long empresaId){
         
-        VendedorDTO vendedor;
-        if(lider.getId() == 0){
-            vendedor = new VendedorDTO(usuario, contrasenia, nombre, direccion, empresa);
-        }else vendedor = new VendedorDTO(usuario, contrasenia, nombre, direccion, lider);
+        System.out.println(empresaId);
         
-        vendedorDAO.altaVendedor(vendedor);
-        model.addAttribute("vendedor", vendedor);
-        return "vendedor";
+        if(liderId == null){
+            EmpresaDTO empresa = empresaDAO.cargarEmpresa(empresaId);
+            VendedorDTO vendedor = new VendedorDTO(usuario, contrasenia, nombre, direccion, empresa);
+            System.out.println(vendedor.getNombre());
+            System.out.println(vendedor.getDireccion());
+            System.out.println(vendedor.getEmpresa().getNombre());
+            vendedorDAO.altaVendedor(vendedor);
+        }else {
+            VendedorDTO lider = vendedorDAO.cargarVendedor(liderId);
+            VendedorDTO vendedor = new VendedorDTO(usuario, contrasenia, nombre, direccion, lider);
+            vendedorDAO.altaVendedor(vendedor);
+        }
+        
+        return "administrador";
     }
 }

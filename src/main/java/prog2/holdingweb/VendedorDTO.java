@@ -12,7 +12,6 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
@@ -22,11 +21,13 @@ import javax.persistence.Table;
 @PrimaryKeyJoinColumn(name = "id")
 public class VendedorDTO extends UsuarioDTO{
     
-    @Column(unique = true, nullable = false)
+    @Column(name = "nombre", nullable = false)
     private String nombre;
-    @Column(unique = true, nullable = false)
+    
+    @Column(name = "fechaDeEntrada", nullable = false)
     private LocalDate fechaDeEntrada;
-    @Column(unique = true, nullable = false)
+    
+    @Column(name = "direccion", nullable = false)
     private String direccion;
     
     @ManyToOne
@@ -34,7 +35,7 @@ public class VendedorDTO extends UsuarioDTO{
     private EmpresaDTO empresa;
     
     @ManyToOne
-    @JoinColumn(name = "idLider")
+    @JoinColumn(name = "idLider", nullable = true)
     private VendedorDTO lider;
     
     @OneToMany(mappedBy = "lider", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -53,8 +54,7 @@ public class VendedorDTO extends UsuarioDTO{
     }
     
     public VendedorDTO(String usuario, String contrasenia, String nombre, String direccion, VendedorDTO lider) {
-        setUsuario(usuario);
-        setContrasenia(contrasenia);
+        super(usuario, contrasenia, "VENDEDOR");
         this.nombre = nombre;
         this.direccion = direccion;
         this.fechaDeEntrada = LocalDate.now();
@@ -63,12 +63,12 @@ public class VendedorDTO extends UsuarioDTO{
     }
     
     public VendedorDTO(String usuario, String contrasenia, String nombre, String direccion, EmpresaDTO empresa) {
-        setUsuario(usuario);
-        setContrasenia(contrasenia);
+        super(usuario, contrasenia, "VENDEDOR");
         this.nombre = nombre;
         this.direccion = direccion;
         this.fechaDeEntrada = LocalDate.now();
         this.empresa = empresa;
+        this.lider = null;
     }
 
     public List<VendedorDTO> getReclutas() {

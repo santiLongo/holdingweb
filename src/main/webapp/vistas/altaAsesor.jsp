@@ -45,7 +45,6 @@
                     <button class="botonPasar" type="button" onclick="mover('empresasDisponibles', 'empresasSeleccionadas')">→</button>
                     <button class="botonPasar" type="button" onclick="mover('empresasSeleccionadas', 'empresasDisponibles')">←</button>
                 </div>
-                
             </div>
             <div class="contenido">
                 <label for=""> Areas:</label>
@@ -61,7 +60,6 @@
                     <button class="botonPasar" type="button" onclick="mover('areasDisponibles', 'areasSeleccionadas')">→</button>
                     <button class="botonPasar" type="button" onclick="mover('areasSeleccionadas', 'areasDisponibles')">←</button>
                 </div>
-                
             </div>
             <br>
             <div>

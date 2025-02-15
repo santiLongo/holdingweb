@@ -75,7 +75,6 @@ public class VendedorDAO {
         .configure(hibernateDir)  
         .buildSessionFactory();
         Session session = sessionFactory.openSession();
-
         try {
             session.beginTransaction();
             session.save(vendedor);

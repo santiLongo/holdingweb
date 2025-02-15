@@ -57,7 +57,7 @@
                 </div>
                 <div> 
                     <button class="boton" type="button" onclick="mover('PaisesDisponibles', 'PaisesSeleccionados')">→</button>
-                    <input class="boton" type="submit" value="Crear Pais">
+                    <input class="boton" type="button" value="Crear Pais">
                     <button class="boton" type="button" onclick="mover('paisesSeleccionados', 'paisesDisponibles')">←</button>
                 </div>
                 <div class="contenido">
@@ -69,11 +69,11 @@
                                 <option value="${pais.getId()}"> ${pais.nombre} </option>
                             </c:forEach>
                         </select>
-                        <input class="boton" type="submit" value="Crear Pais">
+                        <input class="boton" type="button" value="Crear Pais">
                     </div>
                 </div>
                 <div>
-                    <input class="boton" type="submit" onclick="window.history.back();" value="Cancelar y Cerrar">
+                    <input class="boton" type="button" onclick="window.history.back();" value="Cancelar y Cerrar">
                     <input class="boton" type="submit"  type="submit" value="Aceptar y Crear">
                 </div>
             </form>
