@@ -47,6 +47,28 @@ public class PaisDAO {
         return pais;
     }
     
+    public List<PaisDTO> cargarPaises(List<Long> ids){
+        List<PaisDTO> paises = new ArrayList<>();
+        SessionFactory sessionFactory = new Configuration()
+        .configure(hibernateDir)  
+        .buildSessionFactory();
+        Session session = sessionFactory.openSession();
+
+        try {
+            session.beginTransaction();
+            for(Long id: ids){
+            paises.add(session.find(PaisDTO.class, id));
+            }
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        
+        return paises;
+    }
+    
     public List<PaisDTO> traerPaises(){
         List<PaisDTO> paises = null;
         SessionFactory sessionFactory = new Configuration()

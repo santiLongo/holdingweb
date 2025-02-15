@@ -69,7 +69,7 @@ public class PaisDTO{
         this.cantHabitantes = cantidadHabitantes;
     }
 
-    public Long getCodigo() {
+    public Long getId() {
         return id;
     }
 

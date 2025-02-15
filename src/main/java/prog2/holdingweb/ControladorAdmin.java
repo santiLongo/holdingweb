@@ -1,6 +1,6 @@
 package prog2.holdingweb;
 
-import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,19 +23,6 @@ public class ControladorAdmin{
     private EmpresaDAO empresaDAO;
     @Autowired
     private AreaDAO areaDAO;
-    
-    
-    @GetMapping("/inicio/altaAsesor")
-    public String crearAsesor(){
-        return "altaAsesor";
-    }
-    
-    
-    @GetMapping("/inicio/altaVendedor")
-    public String crearVendedor(){
-        return "altaVendedor";
-    }
-    
     
     @GetMapping("/inicio/altaPais")
     public String crearPais(){
@@ -73,10 +60,6 @@ public class ControladorAdmin{
     public String crearEmpresa(Model model){
         model.addAttribute("paises", paisDAO.traerPaises());
         model.addAttribute("areas", areaDAO.traerAreas());
-        
-        for(PaisDTO pais : paisDAO.traerPaises()){
-            System.out.println("Nombre pais: " + pais.getNombre());
-        }
         return "altaEmpresa";
     }
     
@@ -84,47 +67,62 @@ public class ControladorAdmin{
     public String altaEmpresa(Model model,
             @RequestParam(value = "nombre", required = true) String nombre,
             @RequestParam(value = "facturacion", required = true) int facturacion,
-            @RequestParam(value = "sedeCentral", required = true) PaisDTO sedeCentral,
-            @RequestParam(value = "areas", required = true) ArrayList<AreaDTO> areas,
-            @RequestParam(value = "paises", required = true) ArrayList<PaisDTO> paises){
+            @RequestParam(value = "sedeCentral", required = true) Long sedeCentralId,
+            @RequestParam(value = "areas", required = false) List<Long> areasId,
+            @RequestParam(value = "paises", required = false) List<Long> paisesId){
+        
+        System.out.println(nombre);
+        System.out.println(facturacion);
+        List<AreaDTO> areas = areaDAO.cargarAreas(areasId);
+        List<PaisDTO> paises = paisDAO.cargarPaises(paisesId);
+        PaisDTO sedeCentral = paisDAO.cargarPais(sedeCentralId);
+        System.out.println("Sede");
+        System.out.println(sedeCentral.getNombre());
+        System.out.println("Areas");
+        for(AreaDTO area : areas){
+            System.out.println(area.getNombre());
+        }
+        System.out.println("Paises");
+        for(PaisDTO pais: paises){
+            System.out.println(pais.getNombre());
+        }
         
         EmpresaDTO empresa = new EmpresaDTO(nombre,facturacion,areas,paises,sedeCentral);
         empresaDAO.altaEmpresa(empresa);
-        
-        return "index";
+        return "administrador";
     }
     
-    @GetMapping("/inicio/asesor")
+    @GetMapping("/inicio/altaAsesor")
     public String crearAsesor(Model model){
         model.addAttribute("empresas", empresaDAO.traerEmpresas());
         model.addAttribute("areas", areaDAO.traerAreas());
         return "altaAsesor";
     }
     
-    @PostMapping("/inicio/asesor")
+    @PostMapping("/inicio/altaAsesor")
     public String altaAsesor(Model model,
             @RequestParam(value = "usuario", required = true) String usuario,
             @RequestParam(value = "contrasenia", required = true) String contrasenia,
             @RequestParam(value = "nombre", required = true) String nombre,
             @RequestParam(value = "direccion", required = true) String direccion,
-            @RequestParam(value = "areas", required = true) ArrayList<AreaDTO> areas,
-            @RequestParam(value = "empresas", required = true) ArrayList<EmpresaDTO> empresas){
+            @RequestParam(value = "areas", required = true) List<AreaDTO> areas,
+            @RequestParam(value = "empresas", required = true) List<EmpresaDTO> empresas){
         
-        ArrayList<AsesorDTO.Asesora> asesora = AsesorDTO.Asesora.crearLista(empresas);
-        AsesorDTO asesor = new AsesorDTO(nombre, direccion, areas, asesora);
-        asesorDAO.altaAsesor(asesor);
-        model.addAttribute("asesor", asesor);
+       // List<AsesorDTO.Asesora> asesora = AsesorDTO.Asesora.crearLista(empresas);
+       // AsesorDTO asesor = new AsesorDTO(nombre, direccion, areas, asesora);
+        //asesorDAO.altaAsesor(asesor);
+       // model.addAttribute("asesor", asesor);
         return "asesor";
     }
     
-    @GetMapping("/inicio/vendedor")
+    @GetMapping("/inicio/altaVendedor")
     public String crearVendedor(Model model){
         model.addAttribute("empresas", empresaDAO.traerEmpresas());
         model.addAttribute("vendedores", vendedorDAO.traerVendedores());
         return "altaVendedor";
     }
     
-    @PostMapping("/inicio/vendedor")
+    @PostMapping("/inicio/altaVendedor")
     public String altaVendedor(Model model,
             @RequestParam(value = "usuario", required = true) String usuario,
             @RequestParam(value = "contrasenia", required = true) String contrasenia,

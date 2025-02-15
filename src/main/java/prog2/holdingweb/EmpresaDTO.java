@@ -1,7 +1,6 @@
 package prog2.holdingweb;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,8 +27,6 @@ public class EmpresaDTO{
     @Column(nullable = false)
     private int facturacion;
     
-    private int cantVendedores;
-    
     @Column(nullable = false)
     private LocalDate fechaDeEntrada;
     
@@ -50,22 +47,23 @@ public class EmpresaDTO{
     private List<PaisDTO> paises;
     
     @ManyToOne
-    @JoinColumn(name = "idSedeCentral")
+    @JoinColumn(name = "idPaisSede")
     private PaisDTO sedeCentral;
     
-    public EmpresaDTO(String nombre, int facturacion, ArrayList<AreaDTO> areas, ArrayList<PaisDTO> paises, PaisDTO sedeCentral){
+    private int cantVendedores;
+    
+    public EmpresaDTO(String nombre, int facturacion, List<AreaDTO> areas, List<PaisDTO> paises, PaisDTO sedeCentral){
         this.nombre = nombre;
         this.facturacion = facturacion;
         this.areas = areas;
         this.paises = paises;
         this.sedeCentral = sedeCentral;
-        this.cantVendedores = 0;
         this.fechaDeEntrada = LocalDate.now();
     }
 
     public EmpresaDTO(){
-        this.areas = new ArrayList<>();
-        this.paises = new ArrayList<>();
+        this.areas = null;
+        this.paises = null;
     }
 
     public Long getId() {
