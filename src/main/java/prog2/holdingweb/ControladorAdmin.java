@@ -71,21 +71,9 @@ public class ControladorAdmin{
             @RequestParam(value = "areas", required = false) List<Long> areasId,
             @RequestParam(value = "paises", required = false) List<Long> paisesId){
         
-        System.out.println(nombre);
-        System.out.println(facturacion);
         List<AreaDTO> areas = areaDAO.cargarAreas(areasId);
         List<PaisDTO> paises = paisDAO.cargarPaises(paisesId);
         PaisDTO sedeCentral = paisDAO.cargarPais(sedeCentralId);
-        System.out.println("Sede");
-        System.out.println(sedeCentral.getNombre());
-        System.out.println("Areas");
-        for(AreaDTO area : areas){
-            System.out.println(area.getNombre());
-        }
-        System.out.println("Paises");
-        for(PaisDTO pais: paises){
-            System.out.println(pais.getNombre());
-        }
         
         EmpresaDTO empresa = new EmpresaDTO(nombre,facturacion,areas,paises,sedeCentral);
         empresaDAO.altaEmpresa(empresa);
@@ -105,14 +93,29 @@ public class ControladorAdmin{
             @RequestParam(value = "contrasenia", required = true) String contrasenia,
             @RequestParam(value = "nombre", required = true) String nombre,
             @RequestParam(value = "direccion", required = true) String direccion,
-            @RequestParam(value = "areas", required = true) List<AreaDTO> areas,
-            @RequestParam(value = "empresas", required = true) List<EmpresaDTO> empresas){
+            @RequestParam(value = "areas", required = false) List<Long> areasId,
+            @RequestParam(value = "empresas", required = false) List<Long> empresasId){
         
-       // List<AsesorDTO.Asesora> asesora = AsesorDTO.Asesora.crearLista(empresas);
-       // AsesorDTO asesor = new AsesorDTO(nombre, direccion, areas, asesora);
-        //asesorDAO.altaAsesor(asesor);
-       // model.addAttribute("asesor", asesor);
-        return "asesor";
+        List<EmpresaDTO> empresas = empresaDAO.cargarEmpresas(empresasId);
+        List<AsesorDTO.Asesora> asesora = AsesorDTO.Asesora.crearLista(empresas);
+        List<AreaDTO> areas = areaDAO.cargarAreas(areasId);
+        
+        AsesorDTO asesor = new AsesorDTO(usuario, contrasenia, nombre, direccion, areas, asesora);
+        System.out.println(asesor.getUsuario());
+        System.out.println(asesor.getContrasenia());
+        System.out.println(asesor.getNombre());
+        System.out.println(asesor.getDireccion());
+        System.out.println("Areas");
+        for(AreaDTO area: asesor.getAreas()){
+            System.out.println(area.getNombre());
+        }
+        System.out.println("Empresas");
+        for(AsesorDTO.Asesora area: asesor.getAsesora()){
+            System.out.println(area.getEmpresa().getNombre());
+        }
+        asesorDAO.altaAsesor(asesor);
+       
+        return "administrador";
     }
     
     @GetMapping("/inicio/altaVendedor")

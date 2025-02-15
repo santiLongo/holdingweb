@@ -2,6 +2,7 @@ package prog2.holdingweb;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -24,10 +25,10 @@ import org.springframework.stereotype.Repository;
 @PrimaryKeyJoinColumn(name = "id")
 public class AsesorDTO extends UsuarioDTO{
     
-    @Column(nullable = false)
+    @Column(name = "nombre", nullable = false)
     private String nombre;
     
-    @Column(nullable = false)
+    @Column(name = "direccion",nullable = false)
     private String direccion;
     
     @ManyToMany
@@ -36,15 +37,15 @@ public class AsesorDTO extends UsuarioDTO{
         joinColumns = @JoinColumn(name = "idAsesor"),
         inverseJoinColumns = @JoinColumn(name = "idArea")
     )
-    private ArrayList<AreaDTO> areas;
+    private List<AreaDTO> areas;
     
     @ElementCollection
     @CollectionTable(name = "asesora", 
         joinColumns = @JoinColumn(name = "idAsesor"))
-    private ArrayList<Asesora> asesora;
+    private List<Asesora> asesora;
     
-    public AsesorDTO(String nombre, String direccion, ArrayList<AreaDTO> areas, ArrayList<Asesora> asesora){
-        
+    public AsesorDTO(String usuario,String contrasenia, String nombre, String direccion, List<AreaDTO> areas, List<Asesora> asesora){
+        super(usuario, contrasenia, "ASESOR");
         this.nombre = nombre;
         this.direccion = direccion;
         this.areas = areas;
@@ -63,12 +64,12 @@ public class AsesorDTO extends UsuarioDTO{
         @JoinColumn(name = "idEmpresa", nullable = false)
         private EmpresaDTO empresa;
         
-        @Column(nullable = false)
-        private LocalDate fechaEntrada;
+        @Column(name = "fechaDeEntrada", nullable = false)
+        private LocalDate fechaDeEntrada;
         
         public Asesora(EmpresaDTO empresa){
             this.empresa = empresa;
-            this.fechaEntrada = LocalDate.now();
+            this.fechaDeEntrada = LocalDate.now();
         }
         
         protected Asesora(){ 
@@ -78,12 +79,12 @@ public class AsesorDTO extends UsuarioDTO{
             return empresa;
         }
 
-        public LocalDate getFechaEntrada() {
-            return fechaEntrada;
+        public LocalDate getFechaDeEntrada() {
+            return fechaDeEntrada;
         }
         
-        public static ArrayList<Asesora> crearLista(ArrayList<EmpresaDTO> empresas){
-            ArrayList<Asesora> asesora = new ArrayList<>();
+        public static List<Asesora> crearLista(List<EmpresaDTO> empresas){
+            List<Asesora> asesora = new ArrayList<>();
             for(EmpresaDTO empresa : empresas){
                 asesora.add(new Asesora(empresa));
             }
@@ -107,19 +108,19 @@ public class AsesorDTO extends UsuarioDTO{
         this.direccion = direccion;
     }
 
-    public ArrayList<Asesora> getAsesora() {
+    public List<Asesora> getAsesora() {
         return asesora;
     }
 
-    public void setAsesora(ArrayList<Asesora> asesora) {
+    public void setAsesora(List<Asesora> asesora) {
         this.asesora = asesora;
     }
 
-    public ArrayList<AreaDTO> getAreas() {
+    public List<AreaDTO> getAreas() {
         return areas;
     }
 
-    public void setAreas(ArrayList<AreaDTO> areas) {
+    public void setAreas(List<AreaDTO> areas) {
         this.areas = areas;
     }
     

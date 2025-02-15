@@ -1,9 +1,4 @@
-<%-- 
-    Document   : altaAsesor
-    Created on : 13 feb. 2025, 23:49:22
-    Author     : Rocco
---%>
-
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -13,91 +8,77 @@
         <title>JSP Page</title>
     </head>
     <body>
-
-    <div class="contenedor">
-
-        <div class="cabecera">
-            <h2> Crear Asesor</h2>
-        </div>
-
-        <div class="contenido">
-
-            <div class="input_group">
-                <label for="nombreVendedor"> Nombre: </label>
-                <input class="barra_texto" type="text" id="nombreVendedor" placeholder="Ingrese el nombre del vendedor...">
+        <div class="contenedor">
+            <div class="cabecera">
+                <h2> Crear Asesor</h2>
             </div>
-
-            <div class="input_group">
-                <label for="direccion"> Dirección: </label>
-                <input class="barra_texto" type="text" id="direccion" placeholder="Ingrese la direccion del vendedor...">
+            <form method="post" action="/inicio/altaAsesor">
+            <div class="contenido">
+                <div class="input_group">
+                    <label for="usuario"> Usuario: </label>
+                    <input class="barra_texto" type="text" id="usuario" name="usuario" placeholder="Ingrese el usuario del asesor...">
+                </div>
+                <div class="input_group">
+                    <label for="contrasenia"> Contrasenia: </label>
+                    <input class="barra_texto" type="text" id="contrasenia" name="contrasenia" placeholder="Ingrese el contrasenia del asesor...">
+                </div>
+                <div class="input_group">
+                    <label for="nombreAsesor"> Nombre: </label>
+                    <input class="barra_texto" type="text" id="nombre" name="nombre" placeholder="Ingrese el nombre del asesor...">
+                </div>
+                <div class="input_group">
+                    <label for="direccion"> Dirección: </label>
+                    <input class="barra_texto" type="text" id="direccion" name="direccion" placeholder="Ingrese la direccion del asesor...">
+                </div>
             </div>
-
-        </div>
-
-        <div class="contenido">
-
-            <label for=""> Empresas:</label>
-            
-        </div>
-
-        <div style="display: flex; gap: 10px;">
-            <select id="disponibles" multiple>
-                <option value="opcion1">Opción 1</option>
-                <option value="opcion2">Opción 2</option>
-                <option value="opcion3">Opción 3</option>
-                <option value="opcion4">Opción 4</option>
-            </select>
-            
+            <div class="contenido">
+                <label for=""> Empresas:</label>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <select id="empresasDisponibles" multiple>
+                    <c:forEach var="empresa" items="${empresas}">
+                        <option value="${empresa.getId()}"> ${empresa.nombre} </option>
+                    </c:forEach>
+                </select>
+                <select id="empresasSeleccionadas" name="empresas" multiple></select>
+                <div>
+                    <button class="botonPasar" type="button" onclick="mover('empresasDisponibles', 'empresasSeleccionadas')">→</button>
+                    <button class="botonPasar" type="button" onclick="mover('empresasSeleccionadas', 'empresasDisponibles')">←</button>
+                </div>
+                
+            </div>
+            <div class="contenido">
+                <label for=""> Areas:</label>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <select id="areasDisponibles" multiple>
+                    <c:forEach var="area" items="${areas}">
+                        <option value="${area.getId()}"> ${area.nombre} </option>
+                    </c:forEach>
+                </select>
+                <select id="areasSeleccionadas" name="areas" multiple></select>
+                <div>
+                    <button class="botonPasar" type="button" onclick="mover('areasDisponibles', 'areasSeleccionadas')">→</button>
+                    <button class="botonPasar" type="button" onclick="mover('areasSeleccionadas', 'areasDisponibles')">←</button>
+                </div>
+                
+            </div>
+            <br>
             <div>
-                <button class="botonPasar" onclick="mover('disponibles', 'seleccionadas')">→</button>
-                <button class="botonPasar" onclick="mover('seleccionadas', 'disponibles')">←</button>
+                <input class="boton" type="button" onclick="window.history.back();" value="Cancelar y Cerrar">
+                <input class="boton" type="submit" value="Aceptar y Crear">     
             </div>
-            
-            <select id="seleccionadas" multiple></select>
+            </form>
         </div>
+        <script>
+            function mover(origen, destino) {
+                let selOrigen = document.getElementById(origen);
+                let selDestino = document.getElementById(destino);
 
-
-        <div class="contenido">
-
-            <label for=""> Areas:</label>
-            
-        </div>
-
-        <div style="display: flex; gap: 10px;">
-            <select id="AreaDisponibles" multiple>
-                <option value="opcion1">Opción 1</option>
-                <option value="opcion2">Opción 2</option>
-                <option value="opcion3">Opción 3</option>
-                <option value="opcion4">Opción 4</option>
-            </select>
-            
-            <div>
-                <button class="botonPasar" onclick="mover('AreaDisponibles', 'AreaSeleccionadas')">→</button>
-                <button class="botonPasar" onclick="mover('AreaSeleccionadas', 'AreaDisponibles')">←</button>
-            </div>
-            
-            <select id="AreaSeleccionadas" multiple></select>
-        </div>
-
-        <br>
-
-        <div>
-            <input class="boton" type="button" onclick="window.history.back();" value="Cancelar y Cerrar">
-            <input class="boton" type="submit" value="Aceptar y Crear">     
-        </div>
-
-    </div>
-
-    <script>
-        function mover(origen, destino) {
-            let selOrigen = document.getElementById(origen);
-            let selDestino = document.getElementById(destino);
-    
-            Array.from(selOrigen.selectedOptions).forEach(opcion => {
-                selDestino.appendChild(opcion);
-            });
-        }
-    </script>
-    
-</body>
+                Array.from(selOrigen.selectedOptions).forEach(opcion => {
+                    selDestino.appendChild(opcion);
+                });
+            }
+        </script>
+    </body>
 </html>

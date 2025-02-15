@@ -1,5 +1,6 @@
 package prog2.holdingweb;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -43,6 +44,28 @@ public class EmpresaDAO {
             session.close();
         }
         return empresa;
+    }
+    
+    public List<EmpresaDTO> cargarEmpresas(List<Long> ids){
+        List<EmpresaDTO> empresas = new ArrayList<>();
+        SessionFactory sessionFactory = new Configuration()
+        .configure(hibernateDir)  
+        .buildSessionFactory();
+        Session session = sessionFactory.openSession();
+
+        try {
+            session.beginTransaction();
+            for(Long id: ids){
+            empresas.add(session.find(EmpresaDTO.class, id));
+            }
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        
+        return empresas;
     }
     
     public List<EmpresaDTO> traerEmpresas(){

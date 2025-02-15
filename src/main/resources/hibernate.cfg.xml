@@ -16,7 +16,7 @@
         <mapping class="prog2.holdingweb.UsuarioDTO"/>
         <mapping class="prog2.holdingweb.AdministradorDTO"/>
         <mapping class="prog2.holdingweb.VendedorDTO"/>
-        <mapping class="prog2.holdingweb.UsuarioDTO"/>
+        <mapping class="prog2.holdingweb.AsesorDTO"/>
         <mapping class="prog2.holdingweb.PaisDTO"/>
         <mapping class="prog2.holdingweb.EmpresaDTO"/>
         <mapping class="prog2.holdingweb.AreaDTO"/>
