@@ -32,7 +32,7 @@ public class AsesorDTO extends UsuarioDTO{
     @Column(name = "direccion",nullable = false)
     private String direccion;
     
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     @JoinTable(
         name = "soporta",
         joinColumns = @JoinColumn(name = "idAsesor"),
@@ -40,55 +40,23 @@ public class AsesorDTO extends UsuarioDTO{
     )
     private List<AreaDTO> areas;
     
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "asesora", 
-        joinColumns = @JoinColumn(name = "idAsesor"))
-    private Set<Asesora> asesora;
+    @ManyToMany
+    @JoinTable(
+        name = "asesora",
+        joinColumns = @JoinColumn(name = "idAsesor"),
+        inverseJoinColumns = @JoinColumn(name = "idEmpresa")
+    )
+    private List<EmpresaDTO> empresas;
     
-    public AsesorDTO(String usuario,String contrasenia, String nombre, String direccion, List<AreaDTO> areas, Set<Asesora> asesora){
+    public AsesorDTO(String usuario,String contrasenia, String nombre, String direccion, List<AreaDTO> areas, List<EmpresaDTO> empresas){
         super(usuario, contrasenia, "ASESOR");
         this.nombre = nombre;
         this.direccion = direccion;
         this.areas = areas;
-        this.asesora = asesora;
+        this.empresas = empresas;
     }
     
     protected AsesorDTO(){
-    }
-    
-    @Embeddable
-    public static class Asesora{
-        
-        @ManyToOne
-        @JoinColumn(name = "idEmpresa", nullable = false)
-        private EmpresaDTO empresa;
-        
-        @Column(name = "fechaDeEntrada", nullable = false)
-        private LocalDate fechaDeEntrada;
-        
-        public Asesora(EmpresaDTO empresa){
-            this.empresa = empresa;
-            this.fechaDeEntrada = LocalDate.now();
-        }
-        
-        protected Asesora(){ 
-        }
-
-        public EmpresaDTO getEmpresa() {
-            return empresa;
-        }
-
-        public LocalDate getFechaDeEntrada() {
-            return fechaDeEntrada;
-        }
-        
-        public static Set<Asesora> crearLista(List<EmpresaDTO> empresas){
-            Set<Asesora> asesora = new HashSet<>();
-            for(EmpresaDTO empresa : empresas){
-                asesora.add(new Asesora(empresa));
-            }
-            return asesora;
-        }
     }
 
     public String getNombre() {
@@ -107,13 +75,15 @@ public class AsesorDTO extends UsuarioDTO{
         this.direccion = direccion;
     }
 
-    public Set<Asesora> getAsesora() {
-        return asesora;
+    public List<EmpresaDTO> getEmpresas() {
+        return empresas;
     }
 
-    public void setAsesora(Set<Asesora> asesora) {
-        this.asesora = asesora;
+    public void setEmpresas(List<EmpresaDTO> empresas) {
+        this.empresas = empresas;
     }
+
+    
 
     public List<AreaDTO> getAreas() {
         return areas;

@@ -98,10 +98,9 @@ public class ControladorAdmin{
             @RequestParam(value = "empresas", required = false) List<Long> empresasId){
         
         List<EmpresaDTO> empresas = empresaDAO.cargarEmpresas(empresasId);
-        Set<AsesorDTO.Asesora> asesora = AsesorDTO.Asesora.crearLista(empresas);
         List<AreaDTO> areas = areaDAO.cargarAreas(areasId);
         
-        AsesorDTO asesor = new AsesorDTO(usuario, contrasenia, nombre, direccion, areas, asesora);
+        AsesorDTO asesor = new AsesorDTO(usuario, contrasenia, nombre, direccion, areas, empresas);
         asesorDAO.altaAsesor(asesor);
        
         return "administrador";

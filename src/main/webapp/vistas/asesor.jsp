@@ -23,9 +23,9 @@
                 </div>
                 <div class="muestra" id="artEmpresa">
                     <label for="">Empresas:</label>
-                    <c:forEach var="asesora" items="${usuario.getAsesora()}">
+                    <c:forEach var="empresa" items="${usuario.getEmpresas()}">
                         <p>
-                            ${asesora.getEmpresa().getNombre()}  ${asesora.getFechaDeEntrada()}   
+                            ${empresa.getNombre()}   
                         </p>
                     </c:forEach>
                 </div>
