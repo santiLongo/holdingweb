@@ -7,49 +7,36 @@
         <link rel="stylesheet" type="text/css" href="/resources/css/EstiloCrear.css">
         <title>Asesor</title>
     </head>
-
     <body>
         <div class="contenedor">
             <div class="cabecera">
                 <h2>Bienvenido Asesor ${usuario.getNombre()}</h2>
             </div>
-
             <div class="contenido">
-
                 <div class="muestra" id="artCodigo">
                     <label for="">Su codigo de Asesor es: </label>
                     <span> ${usuario.getId()} </span>
                 </div>
-
                 <div class="muestra" id="artDireccion">
                     <label for="">Su direccion es: </label>
                     <span> ${usuario.getDireccion()} </span>
                 </div>
-
                 <div class="muestra" id="artEmpresa">
-
                     <label for="">Empresas:</label>
-                    <c:forEach var="ase" items="${usuario.asesora}">
+                    <c:forEach var="asesora" items="${usuario.getAsesora()}">
                         <p>
-                            ${ase.getEmpresa().getNombre()}  ${ase.getFechaDeEntrada()}   
+                            ${asesora.getEmpresa().getNombre()}  ${asesora.getFechaDeEntrada()}   
                         </p>
                     </c:forEach>
                 </div>
-
-
                 <div class="muestra" id="artAreas">
-
                     <label for="">Areas:</label>
                     <c:forEach var="area" items="${usuario.getAreas()}">
                         <p>
                             ${area.getNombre()}
                         </p>
                     </c:forEach>
-
                 </div>
-
-
-
             </div>
             <form method="get" action="/"> 
                 <input class="boton" type="submit" value="Cerrar Sesion">

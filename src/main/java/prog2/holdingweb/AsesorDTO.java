@@ -2,12 +2,15 @@ package prog2.holdingweb;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embeddable;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
@@ -29,7 +32,7 @@ public class AsesorDTO extends UsuarioDTO{
     @Column(name = "direccion",nullable = false)
     private String direccion;
     
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "soporta",
         joinColumns = @JoinColumn(name = "idAsesor"),
@@ -37,12 +40,12 @@ public class AsesorDTO extends UsuarioDTO{
     )
     private List<AreaDTO> areas;
     
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "asesora", 
         joinColumns = @JoinColumn(name = "idAsesor"))
-    private List<Asesora> asesora;
+    private Set<Asesora> asesora;
     
-    public AsesorDTO(String usuario,String contrasenia, String nombre, String direccion, List<AreaDTO> areas, List<Asesora> asesora){
+    public AsesorDTO(String usuario,String contrasenia, String nombre, String direccion, List<AreaDTO> areas, Set<Asesora> asesora){
         super(usuario, contrasenia, "ASESOR");
         this.nombre = nombre;
         this.direccion = direccion;
@@ -50,9 +53,7 @@ public class AsesorDTO extends UsuarioDTO{
         this.asesora = asesora;
     }
     
-    public AsesorDTO(){
-        this.areas = new ArrayList<>();
-        this.asesora = new ArrayList<>();
+    protected AsesorDTO(){
     }
     
     @Embeddable
@@ -81,8 +82,8 @@ public class AsesorDTO extends UsuarioDTO{
             return fechaDeEntrada;
         }
         
-        public static List<Asesora> crearLista(List<EmpresaDTO> empresas){
-            List<Asesora> asesora = new ArrayList<>();
+        public static Set<Asesora> crearLista(List<EmpresaDTO> empresas){
+            Set<Asesora> asesora = new HashSet<>();
             for(EmpresaDTO empresa : empresas){
                 asesora.add(new Asesora(empresa));
             }
@@ -106,11 +107,11 @@ public class AsesorDTO extends UsuarioDTO{
         this.direccion = direccion;
     }
 
-    public List<Asesora> getAsesora() {
+    public Set<Asesora> getAsesora() {
         return asesora;
     }
 
-    public void setAsesora(List<Asesora> asesora) {
+    public void setAsesora(Set<Asesora> asesora) {
         this.asesora = asesora;
     }
 

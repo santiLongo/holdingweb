@@ -1,6 +1,7 @@
 package prog2.holdingweb;
 
 import java.util.List;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -97,7 +98,7 @@ public class ControladorAdmin{
             @RequestParam(value = "empresas", required = false) List<Long> empresasId){
         
         List<EmpresaDTO> empresas = empresaDAO.cargarEmpresas(empresasId);
-        List<AsesorDTO.Asesora> asesora = AsesorDTO.Asesora.crearLista(empresas);
+        Set<AsesorDTO.Asesora> asesora = AsesorDTO.Asesora.crearLista(empresas);
         List<AreaDTO> areas = areaDAO.cargarAreas(areasId);
         
         AsesorDTO asesor = new AsesorDTO(usuario, contrasenia, nombre, direccion, areas, asesora);

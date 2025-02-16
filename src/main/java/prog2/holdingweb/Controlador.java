@@ -39,8 +39,7 @@ public class Controlador {
             @RequestParam(value = "contrasenia", required = true) String contrasenia) {
         String tipoUser = usuarioDAO.cargarUsuario(usuario, contrasenia);
         model.addAttribute("usuario", usuarioDAO.getUsuario());
-        System.out.println(tipoUser + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        
+      
         if(tipoUser.equals("")){
             return "errorUsuario";
         }
