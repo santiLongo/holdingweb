@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -17,6 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
@@ -32,7 +34,7 @@ public class AsesorDTO extends UsuarioDTO{
     @Column(name = "direccion",nullable = false)
     private String direccion;
     
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "soporta",
         joinColumns = @JoinColumn(name = "idAsesor"),
@@ -40,20 +42,19 @@ public class AsesorDTO extends UsuarioDTO{
     )
     private List<AreaDTO> areas;
     
-    @ManyToMany
-    @JoinTable(
-        name = "asesora",
-        joinColumns = @JoinColumn(name = "idAsesor"),
-        inverseJoinColumns = @JoinColumn(name = "idEmpresa")
-    )
-    private List<EmpresaDTO> empresas;
+    @OneToMany(mappedBy = "asesor", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<AsesoraDTO> asesoramientos;
+
     
     public AsesorDTO(String usuario,String contrasenia, String nombre, String direccion, List<AreaDTO> areas, List<EmpresaDTO> empresas){
         super(usuario, contrasenia, "ASESOR");
         this.nombre = nombre;
         this.direccion = direccion;
         this.areas = areas;
-        this.empresas = empresas;
+        for(EmpresaDTO empresa: empresas){
+            AsesoraDTO asesoramiento = new AsesoraDTO(empresa, this);
+            this.asesoramientos.add(asesoramiento);
+        }
     }
     
     protected AsesorDTO(){
@@ -75,15 +76,13 @@ public class AsesorDTO extends UsuarioDTO{
         this.direccion = direccion;
     }
 
-    public List<EmpresaDTO> getEmpresas() {
-        return empresas;
+    public List<AsesoraDTO> getAsesoramientos() {
+        return asesoramientos;
     }
 
-    public void setEmpresas(List<EmpresaDTO> empresas) {
-        this.empresas = empresas;
+    public void setAsesoramientos(List<AsesoraDTO> asesoramientos) {
+        this.asesoramientos = asesoramientos;
     }
-
-    
 
     public List<AreaDTO> getAreas() {
         return areas;

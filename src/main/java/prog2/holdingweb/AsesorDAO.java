@@ -1,5 +1,6 @@
 package prog2.holdingweb;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -33,6 +34,9 @@ public class AsesorDAO {
         try {
             session.beginTransaction();
             asesor = session.find(AsesorDTO.class, id);
+            if (asesor != null) {
+                Hibernate.initialize(asesor.getAsesoramientos());
+            }
             session.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
