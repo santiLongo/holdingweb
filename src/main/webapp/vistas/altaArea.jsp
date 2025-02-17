@@ -29,6 +29,7 @@
                 </div>
             </div>
             <div>
+                <input type="hidden" name="redirect" value="<%= request.getParameter("redirect") %>">
                 <input class="boton" type="button" onclick="window.history.back();" value="Cancelar y Cerrar">
                 <input class="boton" type="submit" value="Aceptar y Crear">     
             </div>

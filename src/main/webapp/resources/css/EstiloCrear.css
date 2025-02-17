@@ -163,3 +163,27 @@ select[multiple]::-webkit-scrollbar-thumb:hover {
     padding: 25px;
     border-radius: 15px;
 }
+
+.botones{
+    display:flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+a{
+  display: inline-block; 
+    width: 230px;
+    text-decoration: none;
+    padding: 12px; 
+    background: rgba(255, 255, 255, 0.3);
+    color: white; 
+    font-weight: bold;
+    text-align: center; 
+    border-radius: 8px; 
+    border: none;
+    cursor: pointer;
+}
+
+a:hover{
+    background: rgba(255, 255, 255, 0.5); 
+}

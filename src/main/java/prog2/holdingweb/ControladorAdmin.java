@@ -26,35 +26,54 @@ public class ControladorAdmin{
     private AreaDAO areaDAO;
     
     @GetMapping("/inicio/altaPais")
-    public String crearPais(){
+    public String crearPais(@RequestParam(value = "redirect", required = false) String redirect, Model model) {
+        model.addAttribute("redirect", redirect); // Pasar el valor al JSP
         return "altaPais";
     }
     
     @PostMapping("/inicio/altaPais")
-    public String altaPais(Model model,
-            @RequestParam(value = "nombre", required = true) String nombre,
-            @RequestParam(value = "capital", required = true) String capital,
-            @RequestParam(value = "pbi", required = true) int pbi,
-            @RequestParam(value = "cantidadHabitantes", required = true) int cantidadHabitantes){
-        
-        PaisDTO pais = new PaisDTO(nombre,capital,pbi,cantidadHabitantes);
-        paisDAO.altaPais(pais);
+public String altaPais(Model model,
+                       @RequestParam("nombre") String nombre,
+                       @RequestParam("capital") String capital,
+                       @RequestParam("pbi") int pbi,
+                       @RequestParam("cantidadHabitantes") int cantidadHabitantes,
+                       @RequestParam(value = "redirect", required = false) String redirect) {
+
+    PaisDTO pais = new PaisDTO(nombre, capital, pbi, cantidadHabitantes);
+    paisDAO.altaPais(pais);
+
+    // Redirigir según de dónde se abrió la vista altaPais.jsp
+    if ("altaEmpresa".equals(redirect)) {
+        return "redirect:/inicio/altaEmpresa";
+    } else {
+        return "redirect:/inicio";  // Aquí vuelve al menú administrador
+    }
+}
+    
+    @GetMapping("/inicio")
+    public String menuAdmin(){
         return "administrador";
     }
     
     @GetMapping("/inicio/altaArea")
-    public String crearArea(){
+    public String crearArea(@RequestParam(value = "redirect", required = false) String redirect, Model model){
+        model.addAttribute("redirect", redirect); // Pasar el valor al JSP
         return "altaArea";
     }
     
     @PostMapping("/inicio/altaArea")
     public String altaArea(Model model,
             @RequestParam(value = "nombre", required = true) String nombre,
-            @RequestParam(value = "descripcion", required = true) String descripcion){
+            @RequestParam(value = "descripcion", required = true) String descripcion,
+            @RequestParam(value = "redirect", required = false) String redirect){
         
         AreaDTO area = new AreaDTO(nombre,descripcion);
         areaDAO.altaArea(area);
-        return "administrador";
+        if ("altaEmpresa".equals(redirect)) {
+        return "redirect:/inicio/altaEmpresa";
+    } else {
+        return "redirect:/inicio";  // Aquí vuelve al menú administrador
+    }
     }
     
     @GetMapping("/inicio/altaEmpresa")

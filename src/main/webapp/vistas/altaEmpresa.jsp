@@ -17,6 +17,25 @@
             <div class="cabecera">
                 <h2>Crear Empresa</h2>
             </div>
+            
+            <br>  
+            
+            <div class="botones">
+                <div>
+                    <form method="get">
+                    <a href="/inicio/altaPais?redirect=altaEmpresa">Agregar País</a>
+                    </form>
+                    
+                </div>
+                
+                <div>
+                    <form method="get">
+                    <a href="/inicio/altaArea?redirect=altaEmpresa">Agregar Area</a>
+                    </form> 
+                </div>
+                
+             </div>
+            
             <form method="post" action="/inicio/altaEmpresa">
                 <div class="contenido">
                     <div class="input_group">
@@ -41,7 +60,7 @@
                 </div>
                 <div>
                     <button class="boton" type="button" onclick="mover('areasDisponibles', 'areasSeleccionadas')">→</button>
-                    <input class="boton" type="submit" value="Crear Area">
+                    
                     <button class="boton" type="button" onclick="mover('areasSeleccionadas', 'areasDisponibles')">←</button>
                 </div>
                 <div class="contenido">
@@ -57,7 +76,7 @@
                 </div>
                 <div> 
                     <button class="boton" type="button" onclick="mover('PaisesDisponibles', 'PaisesSeleccionados')">→</button>
-                    <input class="boton" type="button" value="Crear Pais">
+                    
                     <button class="boton" type="button" onclick="mover('paisesSeleccionados', 'paisesDisponibles')">←</button>
                 </div>
                 <div class="contenido">
@@ -69,7 +88,8 @@
                                 <option value="${pais.getId()}"> ${pais.nombre} </option>
                             </c:forEach>
                         </select>
-                        <input class="boton" type="button" value="Crear Pais">
+                        
+                        
                     </div>
                 </div>
                 <div>
