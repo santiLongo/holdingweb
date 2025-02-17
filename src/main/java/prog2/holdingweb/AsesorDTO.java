@@ -51,6 +51,8 @@ public class AsesorDTO extends UsuarioDTO{
         this.nombre = nombre;
         this.direccion = direccion;
         this.areas = areas;
+        
+        this.asesoramientos = new ArrayList<>();
         for(EmpresaDTO empresa: empresas){
             AsesoraDTO asesoramiento = new AsesoraDTO(empresa, this);
             this.asesoramientos.add(asesoramiento);
