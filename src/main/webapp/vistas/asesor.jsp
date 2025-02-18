@@ -36,9 +36,10 @@
                 <div class="muestra" id="artAreas">
                     <label for="">Areas:</label>
                     <c:forEach var="area" items="${usuario.getAreas()}">
-                        <p>
-                            ${area.getNombre()}
-                        </p>
+                        <form method="get" action="/area"> 
+                            <input type="hidden" name="idArea" value="${area.getId()}">
+                            <input class="boton" type="submit" value="${area.getNombre()}">
+                        </form>
                     </c:forEach>
                 </div>
             </div>

@@ -23,7 +23,7 @@ public class AreaDAO {
         this.hibernateDir = hibernateDir;
     }
     
-    private AreaDTO cargarArea(Long id){
+    public AreaDTO cargarArea(Long id){
         AreaDTO area = new AreaDTO();
         SessionFactory sessionFactory = new Configuration()
         .configure(hibernateDir)  

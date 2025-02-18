@@ -35,16 +35,15 @@
 
             <div class="muestra"  id="artEmpresa">
                 <label for=""> Trabaja para la empresa: </label>
-                <span>${usuario.empresa.nombre}</span>
+                <form method="get" action="/empresa">
+                    <input type="hidden" name="idEmpresa" value="${usuario.getEmpresa().getId()}">
+                    <input class="boton" type="submit" value="${usuario.getEmpresa().getNombre()}">
+                </form>
             </div>
             
-            <form method="get" action="/inicio/vendedor/empresa">
-                <input class="boton" type="submit" value="Ver Empresa">
-            </form>
-
             <div class="muestra"  id="artLider">
                 <c:choose>
-                    <c:when test = "${usuario.lider.id == 0}">
+                    <c:when test = "${usuario.lider.id == null}">
                         <label for="">No tiene lider.</label>
                     </c:when>
                     <c:otherwise>
@@ -53,7 +52,6 @@
                     </c:otherwise>
                 </c:choose>
             </div>
-
             <div class="muestra"  id="artReclutas">
                 <c:choose>
                     <c:when test = "${empty usuario.reclutas}">

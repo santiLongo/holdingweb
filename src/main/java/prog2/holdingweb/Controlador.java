@@ -15,15 +15,15 @@ public class Controlador {
     @Autowired
     private AdministradorDAO adminDAO;
     @Autowired
+    private VendedorDAO vendedorDAO;
+    @Autowired
+    private AsesorDAO asesorDAO;
+    @Autowired
     private PaisDAO paisDAO;
     @Autowired
     private EmpresaDAO empresaDAO;
-    
-    
-    @GetMapping("/inicio/vendedor/empresa")
-    public String mostrarEmpresa(){
-        return "empresa";
-    }
+    @Autowired
+    private AreaDAO areaDAO;
 
     @GetMapping("/")
     public String mostrarInicio() {
@@ -54,7 +54,6 @@ public class Controlador {
         return tipoUser;
     }
     
-    
     @GetMapping("/empresa")
     public String vistaEmpresa(
             @RequestParam(value = "idEmpresa", required = true) Long id,
@@ -62,5 +61,23 @@ public class Controlador {
         EmpresaDTO empresa = empresaDAO.cargarEmpresa(id);
         model.addAttribute("empresa", empresa);
         return "empresa";
+    }
+    
+    @GetMapping("/pais")
+    public String vistaPais(
+            @RequestParam(value = "idPais", required = true) Long id,
+            Model model) {
+        PaisDTO pais = paisDAO.cargarPais(id);
+        model.addAttribute("pais", pais);
+        return "pais";
+    }
+    
+    @GetMapping("/area")
+    public String vistaArea(
+            @RequestParam(value = "idArea", required = true) Long id,
+            Model model) {
+        AreaDTO area = areaDAO.cargarArea(id);
+        model.addAttribute("area", area);
+        return "area";
     }
 }
