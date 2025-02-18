@@ -42,7 +42,7 @@ public String altaPais(Model model,
     PaisDTO pais = new PaisDTO(nombre, capital, pbi, cantidadHabitantes);
     paisDAO.altaPais(pais);
 
-    // Redirigir según de dónde se abrió la vista altaPais.jsp
+    
     if ("altaEmpresa".equals(redirect)) {
         return "redirect:/inicio/altaEmpresa";
     } else {

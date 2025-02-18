@@ -37,6 +37,10 @@
                 <label for=""> Trabaja para la empresa: </label>
                 <span>${usuario.empresa.nombre}</span>
             </div>
+            
+            <form method="get" action="/inicio/vendedor/empresa">
+                <input class="boton" type="submit" value="Ver Empresa">
+            </form>
 
             <div class="muestra"  id="artLider">
                 <c:choose>

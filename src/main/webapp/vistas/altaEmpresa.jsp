@@ -67,15 +67,15 @@
                     <label for=""> Paises: </label>
                 </div>
                 <div style="display: flex; gap: 10px;">
-                    <select id="PaisesDisponibles" multiple>
+                    <select id="paisesDisponibles" multiple>
                         <c:forEach var="pais" items="${paises}">
                             <option value="${pais.getId()}"> ${pais.nombre} </option>
                         </c:forEach>
                     </select>
-                    <select id="PaisesSeleccionados"name="paises" multiple></select>
+                    <select id="paisesSeleccionados"name="paises" multiple></select>
                 </div>
                 <div> 
-                    <button class="boton" type="button" onclick="mover('PaisesDisponibles', 'PaisesSeleccionados')">→</button>
+                    <button class="boton" type="button" onclick="mover('paisesDisponibles', 'paisesSeleccionados')">→</button>
                     
                     <button class="boton" type="button" onclick="mover('paisesSeleccionados', 'paisesDisponibles')">←</button>
                 </div>
@@ -85,7 +85,7 @@
                         <select  id="sedeCentral" name="sedeCentral" size="1">
                             <option selected hidden> Elija una sede...</option>
                             <c:forEach var="pais" items="${paises}">
-                                <option value="${pais.getId()}"> ${pais.nombre} </option>
+                                <option class="opcion" value="${pais.getId()}"> ${pais.nombre} </option>
                             </c:forEach>
                         </select>
                         

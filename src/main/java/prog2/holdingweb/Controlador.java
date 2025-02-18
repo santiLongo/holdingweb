@@ -16,6 +16,12 @@ public class Controlador {
     private AdministradorDAO adminDAO;
     @Autowired
     private PaisDAO paisDAO;
+    
+    
+    @GetMapping("/inicio/vendedor/empresa")
+    public String mostrarEmpresa(){
+        return "empresa";
+    }
 
     @GetMapping("/")
     public String mostrarInicio() {
@@ -45,4 +51,6 @@ public class Controlador {
         }
         return tipoUser;
     }
+    
+    
 }

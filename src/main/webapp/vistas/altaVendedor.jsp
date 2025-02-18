@@ -35,7 +35,7 @@
                     <select id="empresaVendedor" name="empresa" size="1" >
                         <option selected hidden>Elija una empresa...</option>
                         <c:forEach var="empresa" items="${empresas}">
-                            <option value="${empresa.getId()}"> ${empresa.nombre} </option>
+                            <option class="opcion" value="${empresa.getId()}"> ${empresa.nombre} </option>
                         </c:forEach>
                     </select>
                 </div>
@@ -43,9 +43,9 @@
                     <label for="LiderVendedor"> Lider: </label>
                     <select id="liderVendedor"  name="lider" size="1">
                         <option selected hidden> Elija una lider</option>
-                        <option value="">No tiene Lider</option>
+                        <option class="opcion" value="">No tiene Lider</option>
                         <c:forEach var="lider" items="${vendedores}">
-                            <option value="${lider.getId()}"> ${lider.nombre} </option>
+                            <option class="opcion" value="${lider.getId()}"> ${lider.nombre} </option>
                         </c:forEach>
                     </select>
                 </div>
