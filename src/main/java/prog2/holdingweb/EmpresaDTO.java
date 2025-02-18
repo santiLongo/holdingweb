@@ -12,6 +12,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import org.hibernate.annotations.Formula;
 
 @Entity
 @Table(name = "empresa")
@@ -50,6 +51,7 @@ public class EmpresaDTO{
     @JoinColumn(name = "idPaisSede")
     private PaisDTO sedeCentral;
     
+    @Formula("(SELECT COUNT(v.id) FROM vendedor v WHERE v.idEmpresa = id)")
     private int cantVendedores;
     
     public EmpresaDTO(String nombre, int facturacion, List<AreaDTO> areas, List<PaisDTO> paises, PaisDTO sedeCentral){

@@ -16,6 +16,8 @@ public class Controlador {
     private AdministradorDAO adminDAO;
     @Autowired
     private PaisDAO paisDAO;
+    @Autowired
+    private EmpresaDAO empresaDAO;
     
     
     @GetMapping("/inicio/vendedor/empresa")
@@ -53,4 +55,12 @@ public class Controlador {
     }
     
     
+    @GetMapping("/empresa")
+    public String vistaEmpresa(
+            @RequestParam(value = "idEmpresa", required = true) Long id,
+            Model model) {
+        EmpresaDTO empresa = empresaDAO.cargarEmpresa(id);
+        model.addAttribute("empresa", empresa);
+        return "empresa";
+    }
 }

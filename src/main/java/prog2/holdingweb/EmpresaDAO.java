@@ -2,6 +2,7 @@ package prog2.holdingweb;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -37,6 +38,10 @@ public class EmpresaDAO {
         try {
             session.beginTransaction();
             empresa = session.find(EmpresaDTO.class, id);
+            if (empresa != null) {
+                Hibernate.initialize(empresa.getPaises());
+                Hibernate.initialize(empresa.getAreas());
+            }
             session.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();

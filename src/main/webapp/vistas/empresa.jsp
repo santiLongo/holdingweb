@@ -12,46 +12,46 @@
     <div class="contenedor">
 
         <div class="cabecera">
-            <h2>${empresa.nombre}</h2>
+            <h2>${empresa.getNombre()}</h2>
         </div>
 
         <div class="contenido">
 
             <div class="muestra">
                 <label>Facturación:</label>
-                <span>${empresa.facturacion}</span>
+                <span>${empresa.getFacturacion()} X 1.000.000</span>
             </div>
 
             <div class="muestra">
                 <label>Fecha de entrada:</label>
-                <span>${empresa.fechaDeEntrada}</span>
+                <span>${empresa.getFechaDeEntrada()}</span>
             </div>
             <div class="muestra">
                 <label>Pais Sede:</label>
-                <span>${empresa.paisSede}</span>
+                <span>${empresa.getSedeCentral().getNombre()}</span>
             </div>
 
             <div class="muestra">
                 <label>Cantidad de Vendedores:</label>
-                <span>${empresa.cantVendedores}</span>
+                <span>${empresa.getCantVendedores()}</span>
             </div>
 
             <div class="input_group">
 
                 <div class="muestra">
                     <label>Paises:</label>
-                    <c:forEach var="pais" items="${empresa.paises()}">
+                    <c:forEach var="pais" items="${empresa.getPaises()}">
                             <p>
-                                ${pais.nombre}
+                                ${pais.getNombre()}
                             </p>
                     </c:forEach>
                 </div>
     
                 <div class="muestra">
                     <label>Areas:</label>
-                    <c:forEach var="area" items="${empresa.areas()}">
+                    <c:forEach var="area" items="${empresa.getAreas()}">
                             <p>
-                                ${area.nombre} | ${area.descripcion}
+                                ${area.getNombre()} | ${area.getDescripcion()}
                             </p>
                     </c:forEach>
                 </div>
@@ -61,7 +61,7 @@
 
         </div>
 
-        <input class="boton" type="button" onclick="window.history.back();" value="Cancelar">
+        <input class="boton" type="button" onclick="window.history.back();" value="Salir">
 
     </div>
     

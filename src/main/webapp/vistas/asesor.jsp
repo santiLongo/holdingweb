@@ -27,6 +27,10 @@
                         <p>
                             ${asesoramiento.getEmpresa().getNombre()}       |       ${asesoramiento.getFechaDeEntrada()}
                         </p>
+                        <form method="get" action="/empresa"> 
+                            <input type="hidden" name="idEmpresa" value="${asesoramiento.getEmpresa().getId()}">
+                            <input class="boton" type="submit" value="Ver">
+                        </form>
                     </c:forEach>
                 </div>
                 <div class="muestra" id="artAreas">
